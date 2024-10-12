@@ -12,6 +12,7 @@
   "dependencies": {
     "@langchain/core": "^0.3.10",
     "@langchain/google-genai": "^0.1.0",
+    "@langchain/groq": "^0.1.2",
     "dotenv": "^16.4.5",
     "langchain": "^0.3.2",
     "ts-node": "^10.9.2",
