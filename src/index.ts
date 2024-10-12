@@ -3,6 +3,7 @@ import { BaseMessage, TrimMessagesFields } from "@langchain/core/messages";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { trimMessages } from "@langchain/core/messages";
 import { messages } from "./messages/messages";
+// import { trimOptions } from "./trimOptions";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -13,15 +14,6 @@ const llm = new ChatGroq({
 });
 
 const promptTemplate = PromptTemplate.fromTemplate("Dime un chiste sobre {topic}");
-
-// const trimOptions: TrimMessagesFields = {
-//   maxTokens: 1000,
-//   strategy: "last",
-//   includeSystem: true,
-//   tokenCounter: (messages: BaseMessage[]) => {
-//     return messages.reduce((acc, message) => acc + message.content.length, 0);
-//   },
-// };
 
 const main = async () => {
   // const trimmedMessages = await trimMessages(messages, trimOptions);
