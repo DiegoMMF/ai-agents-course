@@ -1,49 +1,70 @@
 import dotenv from "dotenv";
 import { model } from "./model/model";
 import { messages } from "./messages/messages";
-import { BaseMessage, trimMessages } from "@langchain/core/messages";
+import {
+  BaseChatMessageHistory,
+  InMemoryChatMessageHistory,
+} from "@langchain/core/chat_history";
+import { RunnableWithMessageHistory } from "@langchain/core/runnables";
+import { HumanMessage, trimMessages } from "@langchain/core/messages";
 
 dotenv.config();
 
-// Imperative use of trimMessages
-const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>
-  await trimMessages(messages, {
-    maxTokens: 50,
-    strategy: "last",
-    tokenCounter: model.getNumTokens,
-    includeSystem: false,
-    allowPartial: true,
-    startOn: "human",
-  });
+const chatHistory = new InMemoryChatMessageHistory(messages.slice(0, -1));
 
-// Declarative use of trimMessages
+// The following is a dummy implementation of a function that gets the chat history for a given session ID
+const dummyGetSessionHistory = (sessionId: string): BaseChatMessageHistory => {
+  if (sessionId !== "1") {
+    throw new Error("Session not found");
+  }
+  return chatHistory;
+};
+
+// Create a trimmer
 const trimmer = trimMessages({
-  maxTokens: 50,
+  maxTokens: 45,
   strategy: "last",
   tokenCounter: model.getNumTokens,
-  includeSystem: false,
-  allowPartial: true,
-  startOn: "human",
+  includeSystem: true,
+});
+
+const chain = trimmer.pipe(model);
+
+const chainWithHistory = new RunnableWithMessageHistory({
+  runnable: chain,
+  getMessageHistory: dummyGetSessionHistory,
 });
 
 const main = async () => {
-  // Imperative use of trimmer
-  // const trimmedMessages = await getTrimmedMessages();
-  // console.log(
-  //   trimmedMessages
-  //     .map((x) => JSON.stringify({ role: x.getType(), content: x.content }, null, 2))
-  //     .join("\n\n")
-  // );
-
-  // Declarative use of trimmer
-  const chain = await trimmer.pipe(model).invoke(messages);
-  console.log(chain.content);
+  const result = await chainWithHistory.invoke(
+    [new HumanMessage("Hello, how are you?")],
+    { configurable: { sessionId: "1" } }
+  );
+  console.log(result);
 };
 
 main().catch(console.error);
 
 /* Terminal output:
 
-A "silent squawker" or a "mute mimic"!
-    Quite an oxymoron, isn't it?
+AIMessage {
+  "id": "run-0ddc0a55-e266-4d62-a718-fbe5b867ffe5",
+  "content": "Hello there! I'm just an AI, so I don't have feelings, but I'm here and ready to help you. How can I assist you today?",
+  "additional_kwargs": {},
+  "response_metadata": {
+    "tokenUsage": {
+      "completionTokens": 37,
+      "promptTokens": 122,
+      "totalTokens": 159
+    },
+    "finish_reason": "stop"
+  },
+  "tool_calls": [],
+  "invalid_tool_calls": [],
+  "usage_metadata": {
+    "input_tokens": 122,
+    "output_tokens": 37,
+    "total_tokens": 159
+  }
+}
 */
