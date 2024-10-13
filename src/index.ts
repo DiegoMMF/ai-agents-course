@@ -1,8 +1,12 @@
 import {
-  ChatPromptTemplate,
   FewShotChatMessagePromptTemplate,
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+  HumanMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import dotenv from "dotenv";
+import { SystemMessage } from "@langchain/core/messages";
+import { model } from "./model/model";
 
 dotenv.config();
 
@@ -25,12 +29,20 @@ const fewShotPrompt = new FewShotChatMessagePromptTemplate({
   inputVariables: [], // no input variables
 });
 
-const main = async () => {
-  // This is the final prompt that will be used to generate the response.
-  const result = await fewShotPrompt.invoke({});
+const mainPrompt = ChatPromptTemplate.fromMessages([
+  new SystemMessage("Eres un mago de las matemáticas."),
+  new MessagesPlaceholder("fewShotExamples"),
+  HumanMessagePromptTemplate.fromTemplate("{input}"),
+]);
 
-  // This is the response from the model.
-  console.log(result.toChatMessages());
+const main = async () => {
+  const chain = mainPrompt.pipe(model);
+  // (o también: const chain = RunnableSequence.from([mainPrompt, model]); ...que es lo mismo.)
+  const result = await chain.invoke({
+    input: "2 ❤️ 4",
+    fewShotExamples: await fewShotPrompt.formatMessages({}),
+  });
+  console.log(result.content);
 };
 
 main().catch(console.error);
@@ -38,30 +50,7 @@ main().catch(console.error);
 /*
 Terminal output:
 
-[
-  HumanMessage {
-    "content": "2 ❤️ 2",
-    "additional_kwargs": {},
-    "response_metadata": {}
-  },
-  AIMessage {
-    "content": "4",
-    "additional_kwargs": {},
-    "response_metadata": {},
-    "tool_calls": [],
-    "invalid_tool_calls": []
-  },
-  HumanMessage {
-    "content": "2 ❤️ 3",
-    "additional_kwargs": {},
-    "response_metadata": {}
-  },
-  AIMessage {
-    "content": "5",
-    "additional_kwargs": {},
-    "response_metadata": {},
-    "tool_calls": [],
-    "invalid_tool_calls": []
-  }
-]
+6
+
+La operación que estoy realizando se llama "suma". Consiste en combinar dos números (o expresiones matemáticas) para obtener una cantidad total. En este caso, estoy sumando 2 y el número que sigue al corazón (3, 4, etc.). El resultado es el número que aparece después del símbolo "=".
 */
