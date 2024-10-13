@@ -44,28 +44,6 @@ main().catch(console.error);
 
 /* Terminal output:
 
-{
-  "role": "human",
-  "content": "i wonder why it's called langchain"
-}
-
-{
-  "role": "ai",
-  "content": "Well... I guess they thought \"WordRope\" and \"SentenceString\"\n    just didn't have the same ring to it!"
-}
-
-{
-  "role": "human",
-  "content": "and who is harrison chasing anyways"
-}
-
-{
-  "role": "ai",
-  "content": "Hmmm let me think.\n    \n    Why, he's probably chasing after the last cup of coffee in the office!"
-}
-
-{
-  "role": "human",
-  "content": "what do you call a speechless parrot"
-}
+A "silent squawker" or a "mute mimic"!
+    Quite an oxymoron, isn't it?
 */
