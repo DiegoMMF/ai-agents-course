@@ -7,12 +7,9 @@ dotenv.config();
 
 const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>
   await trimMessages(messages, {
-    maxTokens: 50, // 45 tokens is the max number of tokens that can be sent to the model
-    strategy: "last", // trim the last message
-    tokenCounter: model.getNumTokens, // token counting function
-    includeSystem: false, // don't include assistant messages in the trimmed messages
-    allowPartial: true, // allow partial messages to be returned, meaning the last message will be cut off
-    startOn: "human", // start trimming from the human message
+    maxTokens: 45,
+    strategy: "last",
+    tokenCounter: model.getNumTokens,
   });
 
 const main = async () => {
@@ -36,6 +33,11 @@ const main = async () => {
 main().catch(console.error);
 
 /* Terminal output:
+
+{
+  "role": "system",
+  "content": "you're a good assistant, you always respond with a joke."
+}
 
 {
   "role": "human",
