@@ -1,31 +1,16 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
-import { HumanMessage } from "@langchain/core/messages";
-import { getUserInput } from "./consoleInput/getUserInput";
-import { chatHistory } from "./messages/manualChatHistory";
+import { RunnableLambda } from "@langchain/core/runnables";
 
 dotenv.config();
 
-const main = async () => {
-  // Obtención de la consulta del usuario
-  const query = await new Promise<string>(getUserInput);
-  chatHistory.push(new HumanMessage(query));
+const firstLambda = new RunnableLambda({ func: (x: number) => x + 1 });
 
-  // Invocación del modelo
-  const response = await model.invoke(chatHistory);
-  chatHistory.push(response);
+const secondLambda = new RunnableLambda({ func: (x: number) => x * 2 });
 
-  // Impresión de la respuesta
-  for (const message of chatHistory) console.log(message.content);
-};
+const sequence = firstLambda.pipe(secondLambda);
+
+const main = async () => console.log(await sequence.invoke(10));
 
 main().catch(console.error);
 
-/*
-Terminal output:
-
-Escribe tu consulta: Cómo te llamas?
-Eres un asistente útil de IA
-Cómo te llamas?
-Hola! Me alegra que me consideres un asistente de IA útil. No tengo un nombre específico, pero puedes llamarme simplemente "Asistente de IA" o "Asistente". Estoy aquí para ayudarte en lo que necesites. ¿En qué puedo assistirte hoy?
-*/
+// Terminal output: 22
