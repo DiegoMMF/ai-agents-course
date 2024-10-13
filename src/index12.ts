@@ -1,14 +1,32 @@
 import dotenv from "dotenv";
 import { model } from "./model/model";
-import { HumanMessage } from "@langchain/core/messages";
-import { getUserInput } from "./consoleInput/getUserInput";
-import { chatHistory } from "./messages/manualChatHistory";
+import { BaseMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
+import readline from "readline";
 
 dotenv.config();
 
+// Callback para obtener la consulta del usuario por consola
+const queryCallback = (resolve: (value: string) => void) => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  rl.question("Escribe tu consulta: ", (answer: string) => {
+    resolve(answer);
+    rl.close();
+  });
+};
+// Historial de la conversación
+const chatHistory: BaseMessage[] = [];
+
+// Si no hay historial, se añade un mensaje de sistema
+if (!chatHistory.length) {
+  chatHistory.push(new SystemMessage("Eres un asistente útil de IA"));
+}
+
 const main = async () => {
   // Obtención de la consulta del usuario
-  const query = await new Promise<string>(getUserInput);
+  const query = await new Promise<string>(queryCallback);
   chatHistory.push(new HumanMessage(query));
 
   // Invocación del modelo
