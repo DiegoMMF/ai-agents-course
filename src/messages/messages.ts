@@ -1,19 +1,17 @@
-import {
-  SystemMessage,
-  HumanMessage,
-  AIMessage,
-  BaseMessage,
-} from "@langchain/core/messages";
+import { SystemMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
 
-// const systemMessage = new SystemMessage(
-//   "Eres un asistente útil."
-// );
-
-const humanMessage = new HumanMessage(
-  "Puedes ayudarme a organizar las tareas de la día? Tengo que hacer ejercicio, revisar los emails y preparar el almuerzo."
-);
-
-export const messages: BaseMessage[] = [
-  // systemMessage,
-  humanMessage,
+export const messages = [
+  new SystemMessage("you're a good assistant, you always respond with a joke."),
+  new HumanMessage("i wonder why it's called langchain"),
+  new AIMessage(
+    `Well... I guess they thought "WordRope" and "SentenceString"
+    just didn't have the same ring to it!`
+  ),
+  new HumanMessage("and who is harrison chasing anyways"),
+  new AIMessage(
+    `Hmmm let me think.
+    
+    Why, he's probably chasing after the last cup of coffee in the office!`
+  ),
+  new HumanMessage("what do you call a speechless parrot"),
 ];
