@@ -1,17 +1,29 @@
 import dotenv from "dotenv";
 import { model } from "./model/model";
-import { fewShotPrompt, mainPrompt } from "./messages/fewShotPrompts";
 import { RunnableSequence } from "@langchain/core/runnables";
+import {
+  ChatPromptTemplate,
+  HumanMessagePromptTemplate,
+  SystemMessagePromptTemplate,
+} from "@langchain/core/prompts";
+import { StringOutputParser } from "@langchain/core/output_parsers";
 
 dotenv.config();
 
+const promptTemplate = ChatPromptTemplate.fromMessages([
+  SystemMessagePromptTemplate.fromTemplate("Traduce al {language} lo siguiente:"),
+  HumanMessagePromptTemplate.fromTemplate("{input}"),
+]);
+
+const parser = new StringOutputParser();
+
 const main = async () => {
-  const chain = RunnableSequence.from([mainPrompt, model]);
+  const chain = RunnableSequence.from([promptTemplate, model, parser]);
   const result = await chain.invoke({
-    input: "2 ❤️ 4",
-    fewShotExamples: await fewShotPrompt.formatMessages({}),
+    language: "español",
+    input: "Hello, world!",
   });
-  console.log(result.content);
+  console.log(result);
 };
 
 main().catch(console.error);
@@ -19,7 +31,5 @@ main().catch(console.error);
 /*
 Terminal output:
 
-6
-
-La operación que estoy realizando se llama "suma". Consiste en combinar dos números (o expresiones matemáticas) para obtener una cantidad total. En este caso, estoy sumando 2 y el número que sigue al corazón (3, 4, etc.). El resultado es el número que aparece después del símbolo "=".
+Hola, mundo!
 */
