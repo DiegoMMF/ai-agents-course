@@ -1,23 +1,40 @@
 import dotenv from "dotenv";
 import { model } from "./model/model";
-import { JsonOutputParser } from "@langchain/core/output_parsers";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { BaseMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
+import readline from "readline";
 
 dotenv.config();
 
-const template = `Return a JSON object with a single key named "answer" that answers the following question: {question}.
-Do not wrap the JSON output in markdown blocks.`;
+// Callback para obtener la consulta del usuario por consola
+const queryCallback = (resolve: (value: string) => void) => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  rl.question("Escribe tu consulta: ", (answer: string) => {
+    resolve(answer);
+    rl.close();
+  });
+};
+// Historial de la conversación
+const chatHistory: BaseMessage[] = [];
 
-const jsonPrompt = ChatPromptTemplate.fromTemplate(template);
-const jsonParser = new JsonOutputParser();
-const jsonChain = jsonPrompt.pipe(model).pipe(jsonParser);
+// Si no hay historial, se añade un mensaje de sistema
+if (!chatHistory.length) {
+  chatHistory.push(new SystemMessage("Eres un asistente útil de IA"));
+}
 
 const main = async () => {
-  const stream = await jsonChain.stream({
-    question: "Who invented the microscope?",
-  });
+  // Obtención de la consulta del usuario
+  const query = await new Promise<string>(queryCallback);
+  chatHistory.push(new HumanMessage(query));
 
-  for await (const chunk of stream) console.log(chunk);
+  // Invocación del modelo
+  const response = await model.invoke(chatHistory);
+  chatHistory.push(response);
+
+  // Impresión de la respuesta
+  for (const message of chatHistory) console.log(message.content);
 };
 
 main().catch(console.error);
@@ -25,73 +42,8 @@ main().catch(console.error);
 /*
 Terminal output:
 
-{ answer: '' }
-{ answer: 'The' }
-{ answer: 'The invention' }
-{ answer: 'The invention of' }
-{ answer: 'The invention of the' }
-{ answer: 'The invention of the micro' }
-{ answer: 'The invention of the microscope' }
-{ answer: 'The invention of the microscope is' }
-{ answer: 'The invention of the microscope is attributed' }
-{ answer: 'The invention of the microscope is attributed to' }
-{ answer: 'The invention of the microscope is attributed to Zach' }
-{ answer: 'The invention of the microscope is attributed to Zachari' }
-{
-  answer: 'The invention of the microscope is attributed to Zacharias'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias J'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Jans'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen,'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spect'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker,'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker, in'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker, in the'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker, in the late'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker, in the late 1'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker, in the late 16'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker, in the late 16th'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker, in the late 16th century'
-}
-{
-  answer: 'The invention of the microscope is attributed to Zacharias Janssen, a Dutch spectacle maker, in the late 16th century.'
-}
+Escribe tu consulta: Cómo te llamas?
+Eres un asistente útil de IA
+Cómo te llamas?
+Hola! Me alegra que me consideres un asistente de IA útil. No tengo un nombre específico, pero puedes llamarme simplemente "Asistente de IA" o "Asistente". Estoy aquí para ayudarte en lo que necesites. ¿En qué puedo assistirte hoy?
 */
