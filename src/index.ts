@@ -5,39 +5,39 @@ import { PromptTemplate } from "@langchain/core/prompts";
 
 dotenv.config();
 
-const jokeQuery = "Dime un chiste";
+const query = "Dime un chiste en menos de 50 palabras";
 
-const parser = new JsonOutputParser();
+// const parser = new JsonOutputParser();
 
 const promptWithParser = new PromptTemplate({
-  template: `
-    Responde la solicitud del usuario: {query}
-
-    Tu respuesta DEBE ser un objeto JSON válido con la siguiente estructura:
-    {{
-      "chiste": "El chiste aquí",
-      "explicacion": "Una breve explicación del chiste (opcional)"
-    }}
-
-    {formatInstructions}
-  `,
+  template: "Responde la solicitud del usuario: {query}",
   inputVariables: ["query"],
-  partialVariables: { formatInstructions: parser.getFormatInstructions() },
 });
 
-const chain = promptWithParser.pipe(model).pipe(parser);
+const chain = promptWithParser.pipe(model); //.pipe(parser);
+
+const writeSlowly = async (text: string) => {
+  for (const char of text) {
+    process.stdout.write(char);
+    await new Promise((resolve) => setTimeout(resolve, 70));
+  }
+};
 
 const main = async () => {
-  const result = await chain.invoke({ query: jokeQuery });
-  console.log(result);
+  const result = await chain.stream({ query });
+
+  for await (const chunk of result) {
+    if (chunk.content) {
+      await writeSlowly(chunk.content as string);
+    }
+  }
+  console.log();
 };
 
 main().catch(console.error);
 
 /* Terminal output:
 
-{
-  chiste: '¿Por qué no se invita a Tetris a las fiestas? Porque siempre pone líneas.',
-  explicacion: 'Este chiste es gracioso porque hace una analogía entre el juego Tetris y las fiestas. En Tetris, el objetivo es encajar piezas geométricas llamadas tetrominós para crear líneas completas y eliminarlas. La broma está en que, si Tetris fuera una persona, siempre estaría creando líneas y posiblemente arruinaría la diversión en una fiesta, donde las líneas no son deseables.'
-}
+Por qué el pollo siempre cruza la calle? Porque allí está el otro lado.
+¡Un clásico de siempre, en menos de 30 palabras!
 */
