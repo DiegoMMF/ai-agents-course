@@ -5,39 +5,32 @@ import { BaseMessage, trimMessages } from "@langchain/core/messages";
 
 dotenv.config();
 
-// Imperative use of trimMessages
 const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>
   await trimMessages(messages, {
-    maxTokens: 50,
-    strategy: "last",
-    tokenCounter: model.getNumTokens,
-    includeSystem: false,
-    allowPartial: true,
-    startOn: "human",
+    maxTokens: 50, // 45 tokens is the max number of tokens that can be sent to the model
+    strategy: "last", // trim the last message
+    tokenCounter: model.getNumTokens, // token counting function
+    includeSystem: false, // don't include assistant messages in the trimmed messages
+    allowPartial: true, // allow partial messages to be returned, meaning the last message will be cut off
+    startOn: "human", // start trimming from the human message
   });
 
-// Declarative use of trimMessages
-const trimmer = trimMessages({
-  maxTokens: 50,
-  strategy: "last",
-  tokenCounter: model.getNumTokens,
-  includeSystem: false,
-  allowPartial: true,
-  startOn: "human",
-});
-
 const main = async () => {
-  // Imperative use of trimmer
-  // const trimmedMessages = await getTrimmedMessages();
-  // console.log(
-  //   trimmedMessages
-  //     .map((x) => JSON.stringify({ role: x.getType(), content: x.content }, null, 2))
-  //     .join("\n\n")
-  // );
-
-  // Declarative use of trimmer
-  const chain = await trimmer.pipe(model).invoke(messages);
-  console.log(chain.content);
+  const trimmedMessages = await getTrimmedMessages();
+  console.log(
+    trimmedMessages
+      .map((x) =>
+        JSON.stringify(
+          {
+            role: x.getType(),
+            content: x.content,
+          },
+          null,
+          2
+        )
+      )
+      .join("\n\n")
+  );
 };
 
 main().catch(console.error);
