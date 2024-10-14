@@ -1,26 +1,23 @@
 import dotenv from "dotenv";
 import { model } from "./model/model";
-import { messages } from "./messages/messages";
 import {
   BaseChatMessageHistory,
   InMemoryChatMessageHistory,
 } from "@langchain/core/chat_history";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
-import { HumanMessage, trimMessages } from "@langchain/core/messages";
+import { AIMessage, HumanMessage, trimMessages } from "@langchain/core/messages";
 
 dotenv.config();
 
-const chatHistory = new InMemoryChatMessageHistory(messages.slice(0, -1));
+const store: Record<string, InMemoryChatMessageHistory> = {};
 
-// The following is a dummy implementation of a function that gets the chat history for a given session ID
 const dummyGetSessionHistory = (sessionId: string): BaseChatMessageHistory => {
-  if (sessionId !== "1") {
-    throw new Error("Session not found");
+  if (!Object.keys(store).includes(sessionId)) {
+    store[sessionId] = new InMemoryChatMessageHistory();
   }
-  return chatHistory;
+  return store[sessionId];
 };
 
-// Create a trimmer
 const trimmer = trimMessages({
   maxTokens: 45,
   strategy: "last",
@@ -36,35 +33,115 @@ const chainWithHistory = new RunnableWithMessageHistory({
 });
 
 const main = async () => {
+  const sessionId = "myCurrentSession";
+
+  const chatHistory = dummyGetSessionHistory(sessionId);
+
+  await chatHistory.addMessages([
+    new HumanMessage("Hello, how are you? My name is Diego"),
+    new AIMessage("Hi. I'm here and ready to help you. How can I assist you today?"),
+  ]);
+
   const result = await chainWithHistory.invoke(
-    [new HumanMessage("Hello, how are you?")],
-    { configurable: { sessionId: "1" } }
+    [new HumanMessage("What is my name?")],
+    { configurable: { sessionId } }
   );
-  console.log(result);
+
+  const result2 = await chainWithHistory.invoke(
+    [new HumanMessage("What is my name?")],
+    { configurable: { sessionId: "anotherSession" } }
+  );
+
+  console.log({
+    firstResponse: result.content,
+    firstChatHistory: store[sessionId],
+    secondResponse: result2.content,
+    secondChatHistory: store["anotherSession"],
+  });
 };
 
 main().catch(console.error);
 
 /* Terminal output:
 
-AIMessage {
-  "id": "run-0ddc0a55-e266-4d62-a718-fbe5b867ffe5",
-  "content": "Hello there! I'm just an AI, so I don't have feelings, but I'm here and ready to help you. How can I assist you today?",
-  "additional_kwargs": {},
-  "response_metadata": {
-    "tokenUsage": {
-      "completionTokens": 37,
-      "promptTokens": 122,
-      "totalTokens": 159
-    },
-    "finish_reason": "stop"
+{
+  firstResponse: "You mentioned earlier that your name is Diego. Is there something else you would like to ask or talk about? I'm here to help.",
+  firstChatHistory: InMemoryChatMessageHistory {
+    lc_serializable: false,
+    lc_kwargs: {},
+    lc_namespace: [ 'langchain', 'stores', 'message', 'in_memory' ],
+    messages: [
+      HumanMessage {
+        "content": "Hello, how are you? My name is Diego",
+        "additional_kwargs": {},
+        "response_metadata": {}
+      },
+      AIMessage {
+        "content": "Hi. I'm here and ready to help you. How can I assist you today?",
+        "additional_kwargs": {},
+        "response_metadata": {},
+        "tool_calls": [],
+        "invalid_tool_calls": []
+      },
+      HumanMessage {
+        "content": "Hello, how are you? My name is Diego",
+        "additional_kwargs": {},
+        "response_metadata": {}
+      },
+      AIMessage {
+        "id": "run-e17e4724-1979-43ba-a32f-8856a34221ca",
+        "content": "You mentioned earlier that your name is Diego. Is there something else you would like to ask or talk about? I'm here to help.",
+        "additional_kwargs": {},
+        "response_metadata": {
+          "tokenUsage": {
+            "completionTokens": 30,
+            "promptTokens": 50,
+            "totalTokens": 80
+          },
+          "finish_reason": "stop"
+        },
+        "tool_calls": [],
+        "invalid_tool_calls": [],
+        "usage_metadata": {
+          "input_tokens": 50,
+          "output_tokens": 30,
+          "total_tokens": 80
+        }
+      }
+    ]
   },
-  "tool_calls": [],
-  "invalid_tool_calls": [],
-  "usage_metadata": {
-    "input_tokens": 122,
-    "output_tokens": 37,
-    "total_tokens": 159
+  secondResponse: "I don't have the ability to know your name unless you tell me. I can only provide information and answer questions to the best of my knowledge based on the data I have been trained on.",
+  secondChatHistory: InMemoryChatMessageHistory {
+    lc_serializable: false,
+    lc_kwargs: {},
+    lc_namespace: [ 'langchain', 'stores', 'message', 'in_memory' ],
+    messages: [
+      HumanMessage {
+        "content": "What is my name?",
+        "additional_kwargs": {},
+        "response_metadata": {}
+      },
+      AIMessage {
+        "id": "run-a3024697-f931-468a-a822-877117a7690e",
+        "content": "I don't have the ability to know your name unless you tell me. I can only provide information and answer questions to the best of my knowledge based on the data I have been trained on.",
+        "additional_kwargs": {},
+        "response_metadata": {
+          "tokenUsage": {
+            "completionTokens": 41,
+            "promptTokens": 13,
+            "totalTokens": 54
+          },
+          "finish_reason": "stop"
+        },
+        "tool_calls": [],
+        "invalid_tool_calls": [],
+        "usage_metadata": {
+          "input_tokens": 13,
+          "output_tokens": 41,
+          "total_tokens": 54
+        }
+      }
+    ]
   }
 }
 */
