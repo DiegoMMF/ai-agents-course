@@ -16,6 +16,7 @@
     "@langchain/groq": "^0.1.2",
     "@types/node": "^22.7.5",
     "dotenv": "^16.4.5",
+    "faiss-node": "^0.5.1",
     "langchain": "^0.3.2",
     "pdf-parse": "^1.1.1",
     "ts-node": "^10.9.2",
