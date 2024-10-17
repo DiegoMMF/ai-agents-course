@@ -1,23 +1,11 @@
 import dotenv from "dotenv";
 import { model } from "./model/model";
-import {
-  BaseChatMessageHistory,
-  InMemoryChatMessageHistory,
-} from "@langchain/core/chat_history";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
-import { AIMessage, HumanMessage, trimMessages } from "@langchain/core/messages";
+import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { trimmer } from "./messages/trimOptions";
+import { dummyGetSessionHistory, store } from "./messages/inMemoryChatHIstory";
 
 dotenv.config();
-
-const store: Record<string, InMemoryChatMessageHistory> = {};
-
-const dummyGetSessionHistory = (sessionId: string): BaseChatMessageHistory => {
-  if (!Object.keys(store).includes(sessionId)) {
-    store[sessionId] = new InMemoryChatMessageHistory();
-  }
-  return store[sessionId];
-};
 
 const chain = trimmer.pipe(model);
 
