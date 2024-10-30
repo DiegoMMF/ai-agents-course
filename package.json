@@ -10,8 +10,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@langchain/community": "^0.3.6",
-    "@langchain/core": "^0.3.10",
+    "@huggingface/inference": "^2.8.1",
+    "@langchain/community": "^0.3.11",
+    "@langchain/core": "^0.3.16",
     "@langchain/google-genai": "^0.1.0",
     "@langchain/groq": "^0.1.2",
     "@types/node": "^22.7.5",

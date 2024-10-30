@@ -57,32 +57,22 @@ const tokenSplitter = new TokenTextSplitter({ chunkSize: 10, chunkOverlap: 0 });
 /* Terminal Output
 
 [
-  Document {
-    pageContent: 'Some other considerations include:',
-    metadata: { loc: [Object] },
-    id: undefined
-  },
-  Document {
-    pageContent: '- Do you deploy your backend and frontend together',
-    metadata: { loc: [Object] },
-    id: undefined
-  },
-  Document {
-    pageContent: 'r, or separately?',
-    metadata: { loc: [Object] },
-    id: undefined
-  }
-]
-[
-  Document {
-    pageContent: 'function helloWorld() {\n  console.log("Hello, World!");\n}',
-    metadata: { loc: [Object] },
-    id: undefined
-  },
-  Document {
-    pageContent: '// Call the function\nhelloWorld();',
-    metadata: { loc: [Object] },
-    id: undefined
-  }
+  'Some other considerations include:\n\n- Do you',
+  ' deploy your backend and frontend together, or separately',
+  '?\n- Do you deploy your backend co-',
+  'located with your database, or separately?\n',
+  '\n**Production Support:** As you move your',
+  " LangChains into production, we'd love to",
+  ' offer more hands-on support.\nFill out',
+  ' [this form](https://airtable.com',
+  '/appwQzlErAS2qiP',
+  '0L/shrGtGaVBVAz',
+  '7NcV2) to share more about',
+  " what you're building, and our team will get",
+  ' in touch.\n\n## Deployment Options\n',
+  '\nSee below for a list of deployment options for',
+  " your LangChain app. If you don't see",
+  ' your preferred option, please get in touch and we',
+  ' can add it to this list.'
 ]
 */
