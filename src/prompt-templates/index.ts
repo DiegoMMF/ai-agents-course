@@ -4,7 +4,7 @@ import {
   PromptTemplate,
 } from "@langchain/core/prompts";
 import { SystemMessage } from "@langchain/core/messages";
-import { messages as msgs } from "../messages/messages";
+import { msgs } from "../messages/messages";
 import { chatGroq } from "../models";
 import { writeFileSync } from "fs";
 

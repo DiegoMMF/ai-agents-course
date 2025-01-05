@@ -1,11 +1,11 @@
 
 import { chatGroq } from "./models";
-import { messages } from "./messages/messages";
+import { msgs } from "./messages/messages";
 import { BaseMessage, trimMessages } from "@langchain/core/messages";
 
 
 const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>
-  await trimMessages(messages, {
+  await trimMessages(msgs, {
     maxTokens: 50, // 45 tokens is the max number of tokens that can be sent to the model
     strategy: "last", // trim the last message
     tokenCounter: chatGroq.getNumTokens, // token counting function

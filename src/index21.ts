@@ -1,6 +1,6 @@
 
 import { chatGroq } from "./models";
-import { messages } from "./messages/messages";
+import { msgs } from "./messages/messages";
 import {
   BaseChatMessageHistory,
   InMemoryChatMessageHistory,
@@ -9,7 +9,7 @@ import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { HumanMessage, trimMessages } from "@langchain/core/messages";
 
 
-const chatHistory = new InMemoryChatMessageHistory(messages.slice(0, -1));
+const chatHistory = new InMemoryChatMessageHistory(msgs.slice(0, -1));
 
 // The following is a dummy implementation of a function that gets the chat history for a given session ID
 const dummyGetSessionHistory = (sessionId: string): BaseChatMessageHistory => {
