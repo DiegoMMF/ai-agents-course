@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { chatGroq } from "./model/model";
+import { chatGroq } from "./models";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { trimmer } from "./messages/trimOptions";

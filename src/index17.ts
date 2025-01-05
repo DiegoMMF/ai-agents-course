@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { chatGroq } from "./model/model";
+import { chatGroq } from "./models";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
 

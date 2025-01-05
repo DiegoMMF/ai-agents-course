@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { chatGroq } from "./model/model";
+import { chatGroq } from "./models";
 import {
   BaseChatMessageHistory,
   InMemoryChatMessageHistory,

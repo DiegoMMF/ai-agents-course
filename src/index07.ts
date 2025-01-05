@@ -6,7 +6,7 @@ import {
 } from "@langchain/core/prompts";
 import dotenv from "dotenv";
 import { SystemMessage } from "@langchain/core/messages";
-import { chatGroq } from "./model/model";
+import { chatGroq } from "./models";
 
 dotenv.config();
 

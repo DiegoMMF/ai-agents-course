@@ -7,7 +7,7 @@ import { SystemMessage, trimMessages } from "@langchain/core/messages";
 import { messages } from "./messages/messages";
 // import { trimOptions } from "./messages/trimOptions";
 import dotenv from "dotenv";
-import { chatGroq } from "./model/model";
+import { chatGroq } from "./models";
 
 dotenv.config();
 

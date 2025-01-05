@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { chatGroq } from "./model/model";
+import { chatGroq } from "./models";
 import { HumanMessage } from "@langchain/core/messages";
 import { getUserInput } from "./consoleInput/getUserInput";
 import { chatHistory } from "./messages/manualChatHistory";

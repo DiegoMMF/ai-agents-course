@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { chatGroq } from "./model/model";
+import { chatGroq } from "./models";
 import { BaseMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 import readline from "readline";
 
