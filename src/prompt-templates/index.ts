@@ -8,16 +8,21 @@ import { msgs } from "../messages/messages";
 import { chatGroq } from "../models";
 import { writeFileSync } from "fs";
 
-// Prompt template (simple and old way)
 const promptTemplateLegacy = PromptTemplate.fromTemplate("Haz un chiste de {topic}");
+// This method is designed for traditional language models that process 
+// single prompts. It creates a prompt template that formats user input into a single 
+// string, making it suitable for straightforward queries where context is limited to 
+// the current input.
 
-// Chat prompt template (with system message and messages placeholder)
 const promptTemplateNew = ChatPromptTemplate.fromMessages([
   new SystemMessage(
     "Eres un asistente útil que responde de manera sencilla y clara."
   ),
   new MessagesPlaceholder("msgs"),
 ]);
+// This method is tailored for chat-based models that require handling multiple 
+// messages in a conversation. It organizes inputs into a structured list of messages
+// allowing for more interactive and conversational exchanges.
 
 const main = async () => {
   const responseLegacy = await chatGroq.invoke(
@@ -38,3 +43,9 @@ const main = async () => {
 };
 
 main().catch(console.error);
+
+/* 
+In summary, `PromptTemplate` is ideal for simpler, direct prompts, while
+`ChatPromptTemplate` is designed for more complex interactions that require
+maintaining dialogue history.
+*/
