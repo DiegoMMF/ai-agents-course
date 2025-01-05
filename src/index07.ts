@@ -7,13 +7,7 @@ import {
 
 import { SystemMessage } from "@langchain/core/messages";
 import { chatGroq } from "./models";
-
-
-// These are the examples that will be used to generate the response.
-const examples = [
-  { input: "2 ❤️ 2", output: "4" },
-  { input: "2 ❤️ 3", output: "5" },
-];
+import { examples } from "./messages/messages";
 
 // This is a prompt template used to format each individual example.
 const examplePrompt = ChatPromptTemplate.fromMessages([
