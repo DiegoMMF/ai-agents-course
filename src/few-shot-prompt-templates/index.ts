@@ -1,10 +1,13 @@
 import {
   ChatPromptTemplate,
   FewShotChatMessagePromptTemplate,
+  HumanMessagePromptTemplate,
+  MessagesPlaceholder,
 } from "@langchain/core/prompts";
 import { writeFileSync } from "fs";
 import { examples } from "../messages/messages";
-import { AIMessage, HumanMessage } from "@langchain/core/messages";
+import { SystemMessage } from "@langchain/core/messages";
+import { chatGroq } from "../models";
 
 // This is a prompt template used to format each individual example.
 const examplePrompt = ChatPromptTemplate.fromMessages([
@@ -29,9 +32,26 @@ const fewShotPrompt: FewShotChatMessagePromptTemplate =
     inputVariables: [],
   });
 
+const mainPrompt = ChatPromptTemplate.fromMessages([
+  new SystemMessage("Eres un mago de las matemáticas."),
+  new MessagesPlaceholder("fewShotExamples"),
+  HumanMessagePromptTemplate.fromTemplate("{input}"),
+]);
+
 const main = async () => {
-  const response = (await fewShotPrompt.invoke({})).toChatMessages();
-  writeFileSync(`${__dirname}/response.json`, JSON.stringify(response, null, 2));
+  const responseOne = (await fewShotPrompt.invoke({})).toChatMessages();
+  writeFileSync(`${__dirname}/response.json`, JSON.stringify(responseOne, null, 2));
+
+  const chain = mainPrompt.pipe(chatGroq);
+  // (o también: const chain = RunnableSequence.from([mainPrompt, model]); ...que es lo mismo.)
+  const responseWithChain = await chain.invoke({
+    input: "2 ❤️ 4",
+    fewShotExamples: await fewShotPrompt.formatMessages({}),
+  });
+  writeFileSync(
+    `${__dirname}/responseWithChain.json`,
+    JSON.stringify(responseWithChain, null, 2)
+  );
 };
 
 main().catch(console.error);
