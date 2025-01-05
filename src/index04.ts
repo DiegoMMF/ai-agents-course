@@ -1,15 +1,10 @@
-import { ChatGroq } from "@langchain/groq";
 import { BaseMessage, TrimMessagesFields } from "@langchain/core/messages";
 import { trimMessages } from "@langchain/core/messages";
 import { messages } from "./messages/messages";
 import dotenv from "dotenv";
+import { chatGroq } from "./models";
 
 dotenv.config();
-
-const llm = new ChatGroq({
-  model: "mixtral-8x7b-32768",
-  temperature: 0,
-});
 
 const trimOptions: TrimMessagesFields = {
   maxTokens: 1000, // El mínimo debe dejar dentro al menos un mensaje, o arrojará error
@@ -23,7 +18,7 @@ const trimOptions: TrimMessagesFields = {
 const main = async () => {
   const trimmedMessages = await trimMessages(messages, trimOptions);
 
-  const response = await llm.invoke(trimmedMessages);
+  const response = await chatGroq.invoke(trimmedMessages);
 
   console.log(response.content);
 };

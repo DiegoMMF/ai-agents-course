@@ -1,13 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { ChatGroq } from "@langchain/groq";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
-
-const llm = new ChatGroq({
-  model: "mixtral-8x7b-32768",
-  temperature: 0,
-});
+import { chatGroq } from "./models";
 
 const main = async () => {
   const systemMessage = new SystemMessage(
@@ -18,7 +13,7 @@ const main = async () => {
     "Qué hace el paquete de Node.js llamado: @xenova/transformers?"
   );
 
-  const response = await llm.invoke([systemMessage, humanMessage]);
+  const response = await chatGroq.invoke([systemMessage, humanMessage]);
 
   console.log(response.content);
 };

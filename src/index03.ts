@@ -1,13 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { ChatGroq } from "@langchain/groq";
 import { HumanMessage, SystemMessage, AIMessage } from "@langchain/core/messages";
-
-const llm = new ChatGroq({
-  model: "mixtral-8x7b-32768",
-  temperature: 0,
-});
+import { chatGroq } from "./models";
 
 const main = async () => {
   const systemMessage = new SystemMessage(
@@ -26,11 +21,11 @@ const main = async () => {
     "Tengo que hacer ejercicio, revisar los emails y preparar el almuerzo."
   );
 
-  const response = await llm.invoke([
+  const response = await chatGroq.invoke([
     systemMessage,
     humanMessage,
     assistantMessage,
-    humanMessage2
+    humanMessage2,
   ]);
 
   console.log(response.content);
