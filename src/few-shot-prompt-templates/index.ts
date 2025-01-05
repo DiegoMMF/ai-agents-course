@@ -30,14 +30,8 @@ const fewShotPrompt: FewShotChatMessagePromptTemplate =
   });
 
 const main = async () => {
-  // This is the final prompt that will be used to generate the response.
-  const response = await fewShotPrompt.invoke({});
-
+  const response = (await fewShotPrompt.invoke({})).toChatMessages();
   writeFileSync(`${__dirname}/response.json`, JSON.stringify(response, null, 2));
-  writeFileSync(
-    `${__dirname}/responseToChatMessages.json`,
-    JSON.stringify(response.toChatMessages(), null, 2)
-  );
 };
 
 main().catch(console.error);
