@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { z } from "zod";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { StructuredOutputParser } from "@langchain/core/output_parsers";
@@ -20,7 +20,7 @@ const chain = RunnableSequence.from([
   ChatPromptTemplate.fromTemplate(
     "Answer the users question as best as possible.\n{format_instructions}\n{question}"
   ),
-  model,
+  chatGroq,
   parser,
 ]);
 

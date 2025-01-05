@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 
@@ -10,7 +10,7 @@ Do not wrap the JSON output in markdown blocks.`;
 
 const jsonPrompt = ChatPromptTemplate.fromTemplate(template);
 const jsonParser = new JsonOutputParser();
-const jsonChain = jsonPrompt.pipe(model).pipe(jsonParser);
+const jsonChain = jsonPrompt.pipe(chatGroq).pipe(jsonParser);
 
 const main = async () => {
   const stream = await jsonChain.stream({

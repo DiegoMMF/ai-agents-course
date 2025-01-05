@@ -3,7 +3,7 @@ import {
   BaseMessage,
   trimMessages,
 } from "@langchain/core/messages";
-import { model } from "../model/model";
+import { chatGroq } from "../model/model";
 
 export const trimOptions: TrimMessagesFields = {
   maxTokens: 1000,
@@ -17,6 +17,6 @@ export const trimOptions: TrimMessagesFields = {
 export const trimmer = trimMessages({
   maxTokens: 45,
   strategy: "last",
-  tokenCounter: model.getNumTokens,
+  tokenCounter: chatGroq.getNumTokens,
   includeSystem: true,
 });

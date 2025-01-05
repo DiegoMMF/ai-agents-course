@@ -1,12 +1,12 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { fewShotPrompt, mainPrompt } from "./messages/fewShotPrompts";
 import { RunnableSequence } from "@langchain/core/runnables";
 
 dotenv.config();
 
 const main = async () => {
-  const chain = RunnableSequence.from([mainPrompt, model]);
+  const chain = RunnableSequence.from([mainPrompt, chatGroq]);
   const result = await chain.invoke({
     input: "2 ❤️ 4",
     fewShotExamples: await fewShotPrompt.formatMessages({}),

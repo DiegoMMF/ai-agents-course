@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { messages } from "./messages/messages";
 import { BaseMessage, trimMessages } from "@langchain/core/messages";
 
@@ -9,7 +9,7 @@ const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>
   await trimMessages(messages, {
     maxTokens: 45,
     strategy: "last",
-    tokenCounter: model.getNumTokens,
+    tokenCounter: chatGroq.getNumTokens,
   });
 
 const main = async () => {

@@ -6,7 +6,7 @@ import {
 } from "@langchain/core/prompts";
 import dotenv from "dotenv";
 import { SystemMessage } from "@langchain/core/messages";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 
 dotenv.config();
 
@@ -36,7 +36,7 @@ const mainPrompt = ChatPromptTemplate.fromMessages([
 ]);
 
 const main = async () => {
-  const chain = mainPrompt.pipe(model);
+  const chain = mainPrompt.pipe(chatGroq);
   // (o también: const chain = RunnableSequence.from([mainPrompt, model]); ...que es lo mismo.)
   const result = await chain.invoke({
     input: "2 ❤️ 4",

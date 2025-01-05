@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { HumanMessage } from "@langchain/core/messages";
 import { getUserInput } from "./consoleInput/getUserInput";
 import { chatHistory } from "./messages/manualChatHistory";
@@ -12,7 +12,7 @@ const main = async () => {
   chatHistory.push(new HumanMessage(query));
 
   // Invocación del modelo
-  const response = await model.invoke(chatHistory);
+  const response = await chatGroq.invoke(chatHistory);
   chatHistory.push(response);
 
   // Impresión de la respuesta

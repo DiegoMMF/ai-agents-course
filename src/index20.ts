@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { messages } from "./messages/messages";
 import { BaseMessage, trimMessages } from "@langchain/core/messages";
 
@@ -10,7 +10,7 @@ const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>
   await trimMessages(messages, {
     maxTokens: 50,
     strategy: "last",
-    tokenCounter: model.getNumTokens,
+    tokenCounter: chatGroq.getNumTokens,
     includeSystem: false,
     allowPartial: true,
     startOn: "human",
@@ -20,7 +20,7 @@ const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>
 const trimmer = trimMessages({
   maxTokens: 50,
   strategy: "last",
-  tokenCounter: model.getNumTokens,
+  tokenCounter: chatGroq.getNumTokens,
   includeSystem: false,
   allowPartial: true,
   startOn: "human",
@@ -36,7 +36,7 @@ const main = async () => {
   // );
 
   // Declarative use of trimmer
-  const chain = await trimmer.pipe(model).invoke(messages);
+  const chain = await trimmer.pipe(chatGroq).invoke(messages);
   console.log(chain.content);
 };
 

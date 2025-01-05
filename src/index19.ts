@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { messages } from "./messages/messages";
 import { BaseMessage, trimMessages } from "@langchain/core/messages";
 
@@ -9,7 +9,7 @@ const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>
   await trimMessages(messages, {
     maxTokens: 50, // 45 tokens is the max number of tokens that can be sent to the model
     strategy: "last", // trim the last message
-    tokenCounter: model.getNumTokens, // token counting function
+    tokenCounter: chatGroq.getNumTokens, // token counting function
     includeSystem: false, // don't include assistant messages in the trimmed messages
     allowPartial: true, // allow partial messages to be returned, meaning the last message will be cut off
     startOn: "human", // start trimming from the human message

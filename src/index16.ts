@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
 
@@ -25,7 +25,7 @@ const promptWithParser = new PromptTemplate({
   partialVariables: { formatInstructions: parser.getFormatInstructions() },
 });
 
-const chain = promptWithParser.pipe(model).pipe(parser);
+const chain = promptWithParser.pipe(chatGroq).pipe(parser);
 
 const main = async () => {
   const result = await chain.invoke({ query: jokeQuery });

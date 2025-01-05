@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import { RunnableSequence } from "@langchain/core/runnables";
 import {
   ChatPromptTemplate,
@@ -18,7 +18,7 @@ const promptTemplate = ChatPromptTemplate.fromMessages([
 const parser = new StringOutputParser();
 
 const main = async () => {
-  const chain = RunnableSequence.from([promptTemplate, model, parser]);
+  const chain = RunnableSequence.from([promptTemplate, chatGroq, parser]);
   const result = await chain.invoke({
     language: "español",
     input: "Hello, world!",

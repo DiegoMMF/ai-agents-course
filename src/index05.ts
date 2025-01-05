@@ -7,7 +7,7 @@ import { SystemMessage, trimMessages } from "@langchain/core/messages";
 import { messages } from "./messages/messages";
 // import { trimOptions } from "./messages/trimOptions";
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 
 dotenv.config();
 
@@ -31,7 +31,7 @@ const main = async () => {
   //   await promptTemplate.format({ topic: "machine learning" })
   // );
 
-  const response = await model.invoke(
+  const response = await chatGroq.invoke(
     await promptTemplate.format({ msgs: messages })
   );
   console.log(response.content);

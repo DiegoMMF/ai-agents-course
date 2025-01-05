@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { model } from "./model/model";
+import { chatGroq } from "./model/model";
 import {
   BaseChatMessageHistory,
   InMemoryChatMessageHistory,
@@ -21,11 +21,11 @@ const dummyGetSessionHistory = (sessionId: string): BaseChatMessageHistory => {
 const trimmer = trimMessages({
   maxTokens: 45,
   strategy: "last",
-  tokenCounter: model.getNumTokens,
+  tokenCounter: chatGroq.getNumTokens,
   includeSystem: true,
 });
 
-const chain = trimmer.pipe(model);
+const chain = trimmer.pipe(chatGroq);
 
 const chainWithHistory = new RunnableWithMessageHistory({
   runnable: chain,
