@@ -8,8 +8,8 @@ import { AIMessage, HumanMessage } from "@langchain/core/messages";
 
 // This is a prompt template used to format each individual example.
 const examplePrompt = ChatPromptTemplate.fromMessages([
-  new HumanMessage("{input}"), // ["human", "{input}"], <- See the note below.
-  new AIMessage("{output}"), // ["ai", "{output}"], <- See the note below.
+  ["human", "{input}"],
+  ["ai", "{output}"],
 ]);
 
 /**
@@ -44,7 +44,11 @@ main().catch(console.error);
 
 /*
 NOTE: When considering best practices for using `ChatPromptTemplate.fromMessages()` 
-in LangChain, first option is generally preferred:
+in LangChain, is generally preferred:
+* new HumanMessage("{input}") over ["human", "{input}"]
+and 
+* new AIMessage("{output}") over ["ai", "{output}"]
+but the choice may depend on the specific requirements of your implementation.
 
 Reasons for Preference:
 1.	Clarity and Structure: Using `new HumanMessage()` and `new AIMessage()` 
