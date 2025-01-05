@@ -6,10 +6,9 @@ import {
 import { SystemMessage, trimMessages } from "@langchain/core/messages";
 import { messages } from "./messages/messages";
 // import { trimOptions } from "./messages/trimOptions";
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 
-dotenv.config();
 
 // Prompt template (simple and old way)
 // const promptTemplate = PromptTemplate.fromTemplate("Dime un chiste sobre {topic}");

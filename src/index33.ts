@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import type { Document } from "@langchain/core/documents";
@@ -10,7 +10,6 @@ import type { Document } from "@langchain/core/documents";
 // on Docker Desktop
 // pull image and run container (just follow the UI)
 
-dotenv.config();
 
 const embeddings = new HuggingFaceInferenceEmbeddings({
   apiKey: process.env.HUGGINGFACEHUB_API_KEY,

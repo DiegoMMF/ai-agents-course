@@ -1,7 +1,6 @@
-import dotenv from "dotenv";
+
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 
-dotenv.config();
 
 const embeddings = new HuggingFaceInferenceEmbeddings({
   apiKey: process.env.HUGGINGFACEHUB_API_KEY,

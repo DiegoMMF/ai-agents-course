@@ -1,11 +1,10 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { z } from "zod";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { StructuredOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 
-dotenv.config();
 
 const zodSchema = z.object({
   answer: z.string().describe("answer to the user's question"),

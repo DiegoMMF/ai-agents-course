@@ -1,9 +1,8 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { fewShotPrompt, mainPrompt } from "./messages/fewShotPrompts";
 import { RunnableSequence } from "@langchain/core/runnables";
 
-dotenv.config();
 
 const main = async () => {
   const chain = RunnableSequence.from([mainPrompt, chatGroq]);

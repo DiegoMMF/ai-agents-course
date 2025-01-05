@@ -4,11 +4,10 @@ import {
   MessagesPlaceholder,
   HumanMessagePromptTemplate,
 } from "@langchain/core/prompts";
-import dotenv from "dotenv";
+
 import { SystemMessage } from "@langchain/core/messages";
 import { chatGroq } from "./models";
 
-dotenv.config();
 
 // These are the examples that will be used to generate the response.
 const examples = [

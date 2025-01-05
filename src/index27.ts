@@ -1,10 +1,9 @@
-import dotenv from "dotenv";
+
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { FireworksEmbeddings } from "@langchain/community/embeddings/fireworks";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 
-dotenv.config();
 
 const pdfLoader = new PDFLoader("assets/poem_forever_add_ever.pdf");
 const txtLoader = new TextLoader("assets/poem_forever_add_ever.txt");

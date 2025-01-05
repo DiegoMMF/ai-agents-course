@@ -1,10 +1,9 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { HumanMessage } from "@langchain/core/messages";
 import { getUserInput } from "./consoleInput/getUserInput";
 import { chatHistory } from "./messages/manualChatHistory";
 
-dotenv.config();
 
 const main = async () => {
   // Obtención de la consulta del usuario

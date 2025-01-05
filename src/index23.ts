@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
@@ -6,7 +6,6 @@ import { trimmer } from "./messages/trimOptions";
 import { dummyGetSessionHistory, store } from "./messages/inMemoryChatHIstory";
 import { MessagesPlaceholder } from "@langchain/core/prompts";
 
-dotenv.config();
 
 const chain = trimmer.pipe(chatGroq);
 

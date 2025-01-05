@@ -1,9 +1,8 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 
-dotenv.config();
 
 const template = `Return a JSON object with a single key named "answer" that answers the following question: {question}.
 Do not wrap the JSON output in markdown blocks.`;

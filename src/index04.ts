@@ -1,10 +1,7 @@
 import { BaseMessage, TrimMessagesFields } from "@langchain/core/messages";
 import { trimMessages } from "@langchain/core/messages";
 import { messages } from "./messages/messages";
-import dotenv from "dotenv";
 import { chatGroq } from "./models";
-
-dotenv.config();
 
 const trimOptions: TrimMessagesFields = {
   maxTokens: 1000, // El mínimo debe dejar dentro al menos un mensaje, o arrojará error

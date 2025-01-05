@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { RunnableSequence } from "@langchain/core/runnables";
 import {
@@ -8,7 +8,6 @@ import {
 } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 
-dotenv.config();
 
 const promptTemplate = ChatPromptTemplate.fromMessages([
   SystemMessagePromptTemplate.fromTemplate("Traduce al {language} lo siguiente:"),

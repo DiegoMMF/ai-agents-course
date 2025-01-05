@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { messages } from "./messages/messages";
 import {
@@ -8,7 +8,6 @@ import {
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { HumanMessage, trimMessages } from "@langchain/core/messages";
 
-dotenv.config();
 
 const chatHistory = new InMemoryChatMessageHistory(messages.slice(0, -1));
 

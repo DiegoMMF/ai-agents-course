@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 // import { model } from "./model/model";
 // import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 // import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
@@ -11,7 +10,6 @@ import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 // const blob = new Blob(); // e.g. from a file input
 // const loader = new WebPDFLoader(blob);
 
-dotenv.config();
 
 const loader = new PDFLoader("assets/lorem-ipsum.pdf");
 

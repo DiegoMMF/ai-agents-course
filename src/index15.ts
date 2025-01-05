@@ -1,7 +1,6 @@
-import dotenv from "dotenv";
+
 import { RunnableLambda, RunnableSequence } from "@langchain/core/runnables";
 
-dotenv.config();
 
 const firstLambda = new RunnableLambda({ func: (x: number) => x + 1 });
 

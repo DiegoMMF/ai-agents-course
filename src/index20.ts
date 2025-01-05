@@ -1,9 +1,8 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { messages } from "./messages/messages";
 import { BaseMessage, trimMessages } from "@langchain/core/messages";
 
-dotenv.config();
 
 // Imperative use of trimMessages
 const getTrimmedMessages: () => Promise<BaseMessage[]> = async () =>

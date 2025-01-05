@@ -2,9 +2,7 @@ import {
   ChatPromptTemplate,
   FewShotChatMessagePromptTemplate,
 } from "@langchain/core/prompts";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 // These are the examples that will be used to generate the response.
 const examples = [

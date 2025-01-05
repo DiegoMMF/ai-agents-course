@@ -1,9 +1,8 @@
-import dotenv from "dotenv";
+
 import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { FireworksEmbeddings } from "@langchain/community/embeddings/fireworks";
 import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
 
-dotenv.config();
 
 const csvLoader = new CSVLoader("assets/ideas_de_negocio.csv");
 

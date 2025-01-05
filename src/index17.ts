@@ -1,9 +1,8 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
 
-dotenv.config();
 
 const query = "Dime un chiste en menos de 50 palabras";
 

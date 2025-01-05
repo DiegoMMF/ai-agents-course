@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 // import { model } from "./model/model";
 // import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 // import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
@@ -12,7 +11,6 @@ import { TextLoader } from "langchain/document_loaders/fs/text";
 // const blob = new Blob(); // e.g. from a file input
 // const loader = new WebPDFLoader(blob);
 
-dotenv.config();
 
 const pdfLoader = new PDFLoader("assets/poem_forever_add_ever.pdf");
 const txtLoader = new TextLoader("assets/poem_forever_add_ever.txt");

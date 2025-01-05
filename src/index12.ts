@@ -1,9 +1,8 @@
-import dotenv from "dotenv";
+
 import { chatGroq } from "./models";
 import { BaseMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 import readline from "readline";
 
-dotenv.config();
 
 // Callback para obtener la consulta del usuario por consola
 const queryCallback = (resolve: (value: string) => void) => {
