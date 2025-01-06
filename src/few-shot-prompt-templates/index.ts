@@ -1,12 +1,4 @@
-import {
-  ChatPromptTemplate,
-  FewShotChatMessagePromptTemplate,
-  HumanMessagePromptTemplate,
-  MessagesPlaceholder,
-} from "@langchain/core/prompts";
 import { writeFileSync } from "fs";
-import { examples } from "../messages/messages";
-import { SystemMessage } from "@langchain/core/messages";
 import { chatGroq } from "../models";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { fewShotPrompt, mainPrompt } from "./fewShotPrompts";
