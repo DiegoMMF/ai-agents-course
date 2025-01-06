@@ -2,7 +2,7 @@
 // import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 // import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 // import { trimmer } from "./messages/trimOptions";
-// import { dummyGetSessionHistory, store } from "./messages/inMemoryChatHIstory";
+// import { dummyGetSessionHistory, store } from "./messages/inMemoryChatHistory";
 // import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 // Or, in web environments:

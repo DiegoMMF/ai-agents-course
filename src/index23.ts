@@ -1,21 +1,19 @@
-
 import { chatGroq } from "./models";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { trimmer } from "./messages/trimOptions";
-import { dummyGetSessionHistory, store } from "./messages/inMemoryChatHIstory";
+import { dummyGetSessionHistoryV2, store } from "./messages/inMemoryChatHistory";
 import { MessagesPlaceholder } from "@langchain/core/prompts";
-
 
 const chain = trimmer.pipe(chatGroq);
 
 const sessionId = "myCurrentSession";
 
-const chatHistory = dummyGetSessionHistory(sessionId);
+const chatHistory = dummyGetSessionHistoryV2(sessionId);
 
 const chainWithHistory = new RunnableWithMessageHistory({
   runnable: chain,
-  getMessageHistory: dummyGetSessionHistory,
+  getMessageHistory: dummyGetSessionHistoryV2,
 });
 
 // Continuar con lo de abajo...

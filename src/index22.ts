@@ -1,40 +1,23 @@
-
 import { chatGroq } from "./models";
-import {
-  BaseChatMessageHistory,
-  InMemoryChatMessageHistory,
-} from "@langchain/core/chat_history";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
-import { AIMessage, HumanMessage, trimMessages } from "@langchain/core/messages";
-
-
-const store: Record<string, InMemoryChatMessageHistory> = {};
-
-const dummyGetSessionHistory = (sessionId: string): BaseChatMessageHistory => {
-  if (!Object.keys(store).includes(sessionId)) {
-    store[sessionId] = new InMemoryChatMessageHistory();
-  }
-  return store[sessionId];
-};
-
-const trimmer = trimMessages({
-  maxTokens: 45,
-  strategy: "last",
-  tokenCounter: chatGroq.getNumTokens,
-  includeSystem: true,
-});
+import { AIMessage, HumanMessage } from "@langchain/core/messages";
+import { trimmer } from "./messages/trimOptions";
+import {
+  dummyGetSessionHistoryV2 as getMessageHistory,
+  store,
+} from "./messages/inMemoryChatHistory";
 
 const chain = trimmer.pipe(chatGroq);
 
 const chainWithHistory = new RunnableWithMessageHistory({
   runnable: chain,
-  getMessageHistory: dummyGetSessionHistory,
+  getMessageHistory,
 });
 
 const main = async () => {
   const sessionId = "myCurrentSession";
 
-  const chatHistory = dummyGetSessionHistory(sessionId);
+  const chatHistory = getMessageHistory(sessionId);
 
   await chatHistory.addMessages([
     new HumanMessage("Hello, how are you? My name is Diego"),
