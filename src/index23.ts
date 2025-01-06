@@ -2,7 +2,7 @@ import { chatGroq } from "./models";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { trimmer } from "./messages/trimOptions";
-import { dummyGetSessionHistoryV2, store } from "./messages/inMemoryChatMessageHistoriy";
+import { dummyGetSessionHistoryV2, store } from "./messages/inMemoryChatMessageHistory";
 import { MessagesPlaceholder } from "@langchain/core/prompts";
 
 const chain = trimmer.pipe(chatGroq);

@@ -5,7 +5,7 @@ import { trimmer } from "./messages/trimOptions";
 import {
   dummyGetSessionHistoryV2 as getMessageHistory,
   store,
-} from "./messages/inMemoryChatMessageHistoriy";
+} from "./messages/inMemoryChatMessageHistory";
 
 const chain = trimmer.pipe(chatGroq);
 
