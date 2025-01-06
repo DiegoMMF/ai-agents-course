@@ -2,7 +2,7 @@ import { chatGroq } from "../models";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { HumanMessage } from "@langchain/core/messages";
 import { writeFileSync } from "fs";
-import { dummyGetSessionHistoryV1 as getMessageHistory } from "../messages/inMemoryChatHistory";
+import { dummyGetSessionHistoryV1 as getMessageHistory } from "../messages/inMemoryChatMessageHistoriy";
 import { trimmer } from "../messages/trimOptions";
 
 const runnable = trimmer.pipe(chatGroq);
