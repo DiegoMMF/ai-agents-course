@@ -26,7 +26,7 @@ const main = async () => {
   // Impresión de la respuesta
   for (const message of chatHistory) {
     writeFileSync(
-      `${__dirname}/response.json`,
+      `${__dirname}/response.txt`,
       JSON.stringify(message.content, null, 2) + "\n",
       {
         flag: "a",

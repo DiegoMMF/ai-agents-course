@@ -18,7 +18,7 @@ const main = async () => {
   for await (const chunk of stream) {
     // Write the output to a response.json file after newline without overwriting it.
     writeFileSync(
-      `${__dirname}/response.json`,
+      `${__dirname}/response.txt`,
       JSON.stringify(chunk, null, 2) + "\n",
       { flag: "a" }
     );
