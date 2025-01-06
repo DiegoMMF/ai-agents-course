@@ -1,7 +1,7 @@
 import { trimMessages } from "@langchain/core/messages";
 import { msgs } from "../messages/messages";
 import { chatGroq } from "../models";
-import { trimOptions } from "../messages/trimOptions";
+import { getTrimmedMessages, trimOptions } from "../messages/trimOptions";
 import { writeFileSync } from "fs";
 
 /**
@@ -14,13 +14,38 @@ import { writeFileSync } from "fs";
  */
 const main = async (): Promise<void> => {
   const trimmedMessages = await trimMessages(msgs, trimOptions);
-
-  console.log(trimmedMessages);
+  console.log(
+    trimmedMessages
+      .map((x) =>
+        JSON.stringify(
+          {
+            role: x.getType(),
+            content: x.content,
+          },
+          null,
+          2
+        )
+      )
+      .join("\n\n")
+  );
 
   const response = await chatGroq.invoke(trimmedMessages);
-  writeFileSync(
-    `${__dirname}/response.json`,
-    JSON.stringify(response, null, 2)
+  writeFileSync(`${__dirname}/response.json`, JSON.stringify(response, null, 2));
+
+  const trimmedMessagesThroughFunction = await getTrimmedMessages();
+  console.log(
+    trimmedMessagesThroughFunction
+      .map((x) =>
+        JSON.stringify(
+          {
+            role: x.getType(),
+            content: x.content,
+          },
+          null,
+          2
+        )
+      )
+      .join("\n\n")
   );
 };
 
