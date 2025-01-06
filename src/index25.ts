@@ -11,10 +11,8 @@ import { TextLoader } from "langchain/document_loaders/fs/text";
 // const blob = new Blob(); // e.g. from a file input
 // const loader = new WebPDFLoader(blob);
 
-
 const pdfLoader = new PDFLoader("assets/poem_forever_add_ever.pdf");
 const txtLoader = new TextLoader("assets/poem_forever_add_ever.txt");
-
 
 // const chain = trimmer.pipe(model);
 
@@ -36,7 +34,7 @@ const txtLoader = new TextLoader("assets/poem_forever_add_ever.txt");
 const main = async () => {
   const myPdf = await pdfLoader.load();
   const myTxt = await txtLoader.load();
-  
+
   console.log({ myPdf, myTxt });
 
   // await chatHistory.addMessages([

@@ -10,7 +10,6 @@ import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 // const blob = new Blob(); // e.g. from a file input
 // const loader = new WebPDFLoader(blob);
 
-
 const loader = new PDFLoader("assets/lorem-ipsum.pdf");
 
 // const chain = trimmer.pipe(model);

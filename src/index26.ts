@@ -1,10 +1,6 @@
-
-import { TextLoader } from "langchain/document_loaders/fs/text";
 import { FireworksEmbeddings } from "@langchain/community/embeddings/fireworks";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { Document } from "@langchain/core/documents";
-
 
 const document1: Document = {
   pageContent: "The powerhouse of the cell is the mitochondria",

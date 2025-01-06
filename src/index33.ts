@@ -1,4 +1,3 @@
-
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import type { Document } from "@langchain/core/documents";
@@ -9,7 +8,6 @@ import type { Document } from "@langchain/core/documents";
 
 // on Docker Desktop
 // pull image and run container (just follow the UI)
-
 
 const embeddings = new HuggingFaceInferenceEmbeddings({
   apiKey: process.env.HUGGINGFACEHUB_API_KEY,
@@ -49,11 +47,11 @@ const main = async () => {
 
   console.log(result);
 
-  await vectorStore.delete({ ids: ['3']});
+  await vectorStore.delete({ ids: ["3"] });
 
-  const resultB = vectorStore
+  const resultB = vectorStore;
 
-  console.log(resultB)
+  console.log(resultB);
 };
 
 main().catch(console.error);

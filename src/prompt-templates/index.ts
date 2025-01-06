@@ -6,7 +6,7 @@ import {
 } from "@langchain/core/prompts";
 import { SystemMessage } from "@langchain/core/messages";
 import { msgs } from "../messages/messages";
-import { chatGroq } from "../models";
+import { chatGroq } from "../models/models";
 import { writeFileSync } from "fs";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { RunnableSequence } from "@langchain/core/runnables";

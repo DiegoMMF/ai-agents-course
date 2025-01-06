@@ -1,8 +1,6 @@
-
 import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { FireworksEmbeddings } from "@langchain/community/embeddings/fireworks";
 import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
-
 
 const csvLoader = new CSVLoader("assets/ideas_de_negocio.csv");
 
@@ -18,11 +16,11 @@ const main = async () => {
   const myCsv = await csvLoader.load();
 
   // Procesar cada documento para asignar el _id como id
-  const processedDocuments = myCsv.map(doc => {
-    const content = doc.pageContent.split('\n');
-    const idLine = content.find(line => line.startsWith('_id:'));
+  const processedDocuments = myCsv.map((doc) => {
+    const content = doc.pageContent.split("\n");
+    const idLine = content.find((line) => line.startsWith("_id:"));
     if (idLine) {
-      const id = idLine.split(':')[1].trim();
+      const id = idLine.split(":")[1].trim();
       doc.id = id;
     }
     return doc;

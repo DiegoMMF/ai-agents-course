@@ -1,4 +1,4 @@
-import { chatGoogleGenerativeAI, chatGroq } from "../models";
+import { chatGoogleGenerativeAI, chatGroq } from "../models/models";
 import { BaseMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { writeFileSync } from "fs";
 import { getUserInput } from "./getUserInput";
