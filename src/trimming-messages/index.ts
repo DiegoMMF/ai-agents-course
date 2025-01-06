@@ -1,7 +1,7 @@
 import { trimMessages } from "@langchain/core/messages";
 import { msgs } from "../messages/messages";
 import { chatGroq } from "../models";
-import { getTrimmedMessages, trimOptions } from "../messages/trimOptions";
+import { getTrimmedMessages, trimmer, trimOptions } from "../messages/trimOptions";
 import { writeFileSync } from "fs";
 
 /**
@@ -14,7 +14,7 @@ import { writeFileSync } from "fs";
  */
 const main = async (): Promise<void> => {
   const trimmedMessages = await trimMessages(msgs, trimOptions);
-  console.log(
+  /* console.log(
     trimmedMessages
       .map((x) =>
         JSON.stringify(
@@ -27,13 +27,13 @@ const main = async (): Promise<void> => {
         )
       )
       .join("\n\n")
-  );
+  ); */
 
   const response = await chatGroq.invoke(trimmedMessages);
   writeFileSync(`${__dirname}/response.json`, JSON.stringify(response, null, 2));
 
   const trimmedMessagesThroughFunction = await getTrimmedMessages();
-  console.log(
+  /* console.log(
     trimmedMessagesThroughFunction
       .map((x) =>
         JSON.stringify(
@@ -46,7 +46,11 @@ const main = async (): Promise<void> => {
         )
       )
       .join("\n\n")
-  );
+  ); */
+
+  // Declarative use of trimmer
+  const chain = await trimmer.pipe(chatGroq).invoke(msgs);
+  writeFileSync(`${__dirname}/responseChain.json`, JSON.stringify(chain, null, 2));
 };
 
 main().catch(console.error);
