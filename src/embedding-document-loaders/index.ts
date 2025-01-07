@@ -1,6 +1,6 @@
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { FaissStore } from "@langchain/community/vectorstores/faiss";
-import { fireworksEmbeddings } from "../../db/embeddings";
+import { fireworksEmbeddings } from "../db/embeddings";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
 import { writeFileSync } from "fs";
