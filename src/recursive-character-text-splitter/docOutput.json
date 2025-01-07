@@ -1,0 +1,35 @@
+[
+  {
+    "pageContent": "Some other considerations include:",
+    "metadata": {
+      "loc": {
+        "lines": {
+          "from": 1,
+          "to": 1
+        }
+      }
+    }
+  },
+  {
+    "pageContent": "- Do you deploy your backend and frontend together",
+    "metadata": {
+      "loc": {
+        "lines": {
+          "from": 3,
+          "to": 3
+        }
+      }
+    }
+  },
+  {
+    "pageContent": "r, or separately?",
+    "metadata": {
+      "loc": {
+        "lines": {
+          "from": 3,
+          "to": 3
+        }
+      }
+    }
+  }
+]
