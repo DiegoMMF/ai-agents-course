@@ -11,8 +11,8 @@
   "description": "",
   "dependencies": {
     "@huggingface/inference": "^2.8.1",
-    "@langchain/community": "^0.3.11",
-    "@langchain/core": "^0.3.16",
+    "@langchain/community": "^0.3.22",
+    "@langchain/core": "^0.3.27",
     "@langchain/google-genai": "^0.1.0",
     "@langchain/groq": "^0.1.2",
     "@pinecone-database/pinecone": "^4.0.0",
