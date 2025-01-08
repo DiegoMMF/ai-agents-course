@@ -36,15 +36,18 @@ pueda ser leído por el modelo.
 2. Splitter de documentos: `RecursiveCharacterTextSplitter`
 
 El objetivo es dividir los documentos en chunks de texto que puedan ser leídos por el 
-modelo.
+modelo de manera eficiente.
 
-3. Crear embeddings: `GroqEmbeddings`
+3. Crear embeddings: `HuggingFaceInferenceEmbeddings`
 
-El objetivo es crear embeddings para los chunks de texto.
+El objetivo es crear embeddings para los chunks de texto. Este embedding es un array 
+de floats que representa el documento en un espacio vectorial.
 
-4. Crear vector store: `Chroma`
+4. Crear vector store: `ChromaDB`
 
-El objetivo es crear un vector store para los embeddings.
+El objetivo es crear un vector store para los embeddings. Este vector store es una 
+estructura de datos que permite almacenar los embeddings y buscarlos de manera 
+eficiente.
 
 5. Crear modelo de RAG: `RetrievalAugmentedGeneration`
 

@@ -1,6 +1,10 @@
 import { writeFileSync } from "fs";
-import { hfEmbeddings, documentsA, documentsB } from "../../db/embeddings";
-import { Chroma } from "@langchain/community/vectorstores/chroma";
+import {
+  hfEmbeddings,
+  documentsA,
+  documentsB,
+  chroma,
+} from "../../db/embeddings";
 
 const hfPlainEmbeddings = async () => {
   // Embed documents into a vector space
@@ -27,28 +31,16 @@ const hfPlainEmbeddings = async () => {
   );
 };
 
-// on Docker terminal
-// docker pull chromadb/chroma
-// docker run -p 8000:8000 chromadb/chroma
-
-// on Docker Desktop
-// pull image and run container (just follow the UI)
-
-const vectorStore = new Chroma(hfEmbeddings, {
-  collectionName: "a-test-collection", // collection name
-  url: "http://0.0.0.0:8000", // Chroma URL
-});
-
 const hfEmbeddingsWithVectorStore = async () => {
-  const responseA = await vectorStore.addDocuments(documentsB, {
+  const responseA = await chroma.addDocuments(documentsB, {
     ids: ["1", "2", "3", "4"],
   });
 
   writeFileSync(`${__dirname}/result.json`, JSON.stringify(responseA, null, 2));
 
-  await vectorStore.delete({ ids: ["3"] });
+  await chroma.delete({ ids: ["3"] });
 
-  const responseB = vectorStore;
+  const responseB = chroma;
 
   writeFileSync(`${__dirname}/resultB.json`, JSON.stringify(responseB, null, 2));
 };

@@ -5,6 +5,7 @@ import type { Document } from "@langchain/core/documents";
 import { FireworksEmbeddings } from "@langchain/community/embeddings/fireworks";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { Pinecone } from "@pinecone-database/pinecone";
+import { Chroma } from "@langchain/community/vectorstores/chroma";
 
 export const fireworksEmbeddings = new FireworksEmbeddings({
   modelName: "nomic-ai/nomic-embed-text-v1.5",
@@ -14,7 +15,23 @@ export const hfEmbeddings = new HuggingFaceInferenceEmbeddings({
   apiKey: process.env.HUGGINGFACEHUB_API_KEY,
 });
 
+// * Pinecone vectorDB
+
 export const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY as string });
+
+// * Para correr Chroma hay que levantar el servidor en Docker:
+
+// on Docker terminal
+// docker pull chromadb/chroma
+// docker run -p 8000:8000 chromadb/chroma
+
+// on Docker Desktop
+// pull image and run container (just follow the UI)
+
+export const chroma = new Chroma(hfEmbeddings, {
+  collectionName: "a-test-collection", // collection name
+  url: "http://0.0.0.0:8000", // Chroma URL
+});
 
 // * Mocked Documents for testing
 
