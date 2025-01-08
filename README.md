@@ -26,4 +26,29 @@ Se debe crear un archivo llamado ".env" en la carpeta raíz y agregársele la "G
 
 - [RAG](./src/rag/index.ts)
 
+### RAG - Procedimiento
+
+1. Cargar documentos: `DirectoryLoader`
+
+El objetivo es cargar los documentos de un directorio y guardarlos en un formato que
+pueda ser leído por el modelo.
+
+2. Splitter de documentos: `RecursiveCharacterTextSplitter`
+
+El objetivo es dividir los documentos en chunks de texto que puedan ser leídos por el 
+modelo.
+
+3. Crear embeddings: `GroqEmbeddings`
+
+El objetivo es crear embeddings para los chunks de texto.
+
+4. Crear vector store: `Chroma`
+
+El objetivo es crear un vector store para los embeddings.
+
+5. Crear modelo de RAG: `RetrievalAugmentedGeneration`
+
+El objetivo es crear un modelo de RAG.
+
+6. Crear agente de RAG: `createRetrievalAgent`
 
