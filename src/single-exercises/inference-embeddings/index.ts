@@ -3,7 +3,7 @@ import {
   hfEmbeddings,
   documentsA,
   documentsB,
-  chroma,
+  chromaVectorStore,
 } from "../../db/embeddings";
 
 const hfPlainEmbeddings = async () => {
@@ -32,15 +32,15 @@ const hfPlainEmbeddings = async () => {
 };
 
 const hfEmbeddingsWithVectorStore = async () => {
-  const responseA = await chroma.addDocuments(documentsB, {
+  const responseA = await chromaVectorStore.addDocuments(documentsB, {
     ids: ["1", "2", "3", "4"],
   });
 
   writeFileSync(`${__dirname}/result.json`, JSON.stringify(responseA, null, 2));
 
-  await chroma.delete({ ids: ["3"] });
+  await chromaVectorStore.delete({ ids: ["3"] });
 
-  const responseB = chroma;
+  const responseB = chromaVectorStore;
 
   writeFileSync(`${__dirname}/resultB.json`, JSON.stringify(responseB, null, 2));
 };

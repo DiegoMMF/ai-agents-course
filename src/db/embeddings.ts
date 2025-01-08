@@ -28,7 +28,7 @@ export const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY as string 
 // on Docker Desktop
 // pull image and run container (just follow the UI)
 
-export const chroma = new Chroma(hfEmbeddings, {
+export const chromaVectorStore = new Chroma(hfEmbeddings, {
   collectionName: "a-test-collection", // collection name
   url: "http://0.0.0.0:8000", // Chroma URL
 });
