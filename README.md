@@ -30,13 +30,13 @@ Se debe crear un archivo llamado ".env" en la carpeta raíz y agregársele la "G
 
 1. Cargar documentos: `DirectoryLoader`
 
-El objetivo es cargar los documentos de un directorio y guardarlos en un formato que
-pueda ser leído por el modelo.
+El objetivo es cargar los documentos a partir de un directorio y guardarlos en un 
+formato que pueda ser leído por el modelo.
 
 2. Splitter de documentos: `RecursiveCharacterTextSplitter`
 
-El objetivo es dividir los documentos en chunks de texto que puedan ser leídos por el 
-modelo de manera eficiente.
+El objetivo es dividir los documentos en chunks de texto que puedan ser leídos y 
+procesados por el modelo de manera más eficiente.
 
 3. Crear embeddings: `HuggingFaceInferenceEmbeddings`
 

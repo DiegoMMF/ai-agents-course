@@ -2,6 +2,7 @@ import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { saveOutput } from "./utils";
+import { chromaVectorStore } from "../db/embeddings";
 
 // * Carga de documentos PDF a partir de un directorio
 const loader = new DirectoryLoader("./src/rag/pdfs", {
@@ -27,6 +28,17 @@ const main = async () => {
 
   const splittedDocs = await textSplitter.splitDocuments(docs);
   saveOutput("splittedDocs", splittedDocs);
+
+  // Create the vector store first
+  const addedDocs = await chromaVectorStore.addDocuments(splittedDocs);
+  saveOutput("addedDocs", addedDocs);
+
+  // Then use the chroma instance directly
+  const retriever = chromaVectorStore.asRetriever();
+  saveOutput("retriever", retriever);
+
+  const queryResult = await retriever.invoke("What is the powerhouse of the cell?");
+  saveOutput("queryResult", queryResult);
 };
 
 main().catch(console.error);
