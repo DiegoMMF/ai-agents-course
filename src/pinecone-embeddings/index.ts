@@ -34,30 +34,3 @@ const main = async () => {
 };
 
 main().catch(console.error);
-
-/* Terminal output:
-
-{
-  embeddings: EmbeddingsList(6) [
-    { values: [Array] },
-    { values: [Array] },
-    { values: [Array] },
-    { values: [Array] },
-    { values: [Array] },
-    { values: [Array] },
-    model: 'multilingual-e5-large',
-    data: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
-    usage: { totalTokens: 130 }
-  ],
-  index: {
-    name: 'example-index',
-    dimension: 1024,
-    metric: 'cosine',
-    host: 'example-index-6zhhpe2.svc.aped-4627-b74a.pinecone.io',
-    deletionProtection: 'disabled',
-    tags: undefined,
-    spec: { pod: undefined, serverless: [Object] },
-    status: { ready: false, state: 'Initializing' }
-  }
-}
-*/
