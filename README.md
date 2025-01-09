@@ -33,10 +33,22 @@ Se debe crear un archivo llamado ".env" en la carpeta raíz y agregársele la "G
 El objetivo es cargar los documentos a partir de un directorio y guardarlos en un 
 formato que pueda ser leído por el modelo.
 
+Carga los documentos desde el directorio. Si un archivo es un directorio y recursive 
+es true, recorre recursivamente los subdirectorios y carga los documentos. Si un 
+archivo es un archivo, verifica si hay una función de carga correspondiente para la 
+extensión del archivo en el mapeo de loaders. Si hay, carga los documentos.
+
+Es importante saber que cuando los documentos son más largos, debemos separarlos en 
+chunks. De esta manera, el modelo puede procesarlos de manera más eficiente.
+
 2. Splitter de documentos: `RecursiveCharacterTextSplitter`
 
 El objetivo es dividir los documentos en chunks de texto que puedan ser leídos y 
 procesados por el modelo de manera más eficiente.
+
+El chunkSize y chunkOverlap deben ser ajustados según el tamaño de los docs. Si son 
+muy largos, se debe aumentar el chunkSize y disminuir el chunkOverlap. Si son muy 
+cortos, se debe disminuir el chunkSize y aumentar el chunkOverlap.
 
 3. Crear embeddings: `HuggingFaceInferenceEmbeddings`
 
@@ -47,11 +59,39 @@ de floats que representa el documento en un espacio vectorial.
 
 El objetivo es crear un vector store para los embeddings. Este vector store es una 
 estructura de datos que permite almacenar los embeddings y buscarlos de manera 
-eficiente.
+eficiente. Para correr Chroma de forma localhay que levantar el servidor en Docker:
 
-5. Crear modelo de RAG: `RetrievalAugmentedGeneration`
+```
+on Docker terminal
+docker pull chromadb/chroma
+docker run -p 8000:8000 chromadb/chroma
+```
 
-El objetivo es crear un modelo de RAG.
+En Docker Desktop:
 
-6. Crear agente de RAG: `createRetrievalAgent`
+```
+pull image and run container (just follow the UI)
+```
 
+5. Creamos un retriever: `VectorStoreRetriver`
+
+El objetivo es crear un retriever a partir de la embedded data. Este retriever se 
+encarga de buscar la información relevante en la vector store.
+
+6. Crear un retriever con historial de conversación: `createHistoryAwareRetriever`
+
+El objetivo es crear un retriever con historial de conversación que recibe como
+parámetro el retriever, el LLM y el prompt de reescritura de preguntas para afinar y
+recalibrar la pregunta del usuario.
+
+7. Crear una cadena de pregunta y respuesta: `createStuffDocumentsChain`
+
+Se crea una cadena de pregunta y respuesta que recibe como parámetro el LLM y el
+prompt de pregunta y respuesta.
+
+8. Crear una cadena de RAG: `createRetrievalChain`
+
+Se crea una cadena de RAG que recibe como parámetro el retriever y la cadena de
+la cadena de pregunta y respuesta. Esta cadena se encarga de combinar el retriever
+con la cadena de pregunta y respuesta para generar una respuesta más completa y
+precisa.
