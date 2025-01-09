@@ -43,7 +43,10 @@ const main = async () => {
 
   // Combina los fragmentos recuperados con la pregunta del usuario para generar una
   // respuesta más completa y precisa.
-  const questionAnswerChain = await createStuffDocumentsChain({ llm, prompt: qaPrompt });
+  const questionAnswerChain = await createStuffDocumentsChain({
+    llm,
+    prompt: qaPrompt,
+  });
   saveOutput("questionAnswerChain", questionAnswerChain);
 
   // El LLM toma los fragmentos recuperados y los utiliza como contexto adicional
@@ -66,7 +69,6 @@ const main = async () => {
     outputMessagesKey: "answer",
   });
   saveOutput("conversationalRagChain", conversationalRagChain);
-
 
   const queryResult = await conversationalRagChain.invoke(
     { input: "Cuáles son las ventas del último trimestre?" },

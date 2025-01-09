@@ -6,9 +6,13 @@ import { writeFileSync } from "fs";
 
 let counter = 1;
 
-export const saveOutput = (path: string, data: any) => {
+export const saveOutput = (
+  path: string,
+  data: any,
+  rootPath: string = "./src/rag/output/"
+) => {
   writeFileSync(
-    `./src/rag/output/response_${counter}_${path}.json`,
+    `${rootPath}response_${counter}_${path}.json`,
     JSON.stringify(data, null, 2)
   );
   counter++;
