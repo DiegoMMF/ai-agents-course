@@ -49,7 +49,9 @@ const queryDatabase = async () => {
   // - table_info: the table information
   // - input: the user input
   const db = await SqlDatabase.fromDataSourceParams({ appDataSource });
-
+  const dbTables = db.allTables.map((t) => t.tableName);
+  saveOutput("dbTables", dbTables, "./src/tools/output/");
+  
   // We can test the connection to the database by running a query
   const vanillaSqlQueryResult = await db.run("SELECT * FROM Artist LIMIT 10;");
   saveOutput("vanillaSqlQueryResult", vanillaSqlQueryResult, "./src/tools/output/");
