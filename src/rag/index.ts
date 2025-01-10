@@ -32,6 +32,10 @@ const main = async () => {
   const retriever = vectorStore.asRetriever();
   saveOutput("retriever", retriever);
 
+  // Hay otra forma de lograr lo mismo que el de arriba salvo que se puede configurar
+  // el retriever, por ejemplo, el número de documentos a devolver, el filtro, etc.:
+  // const retriever = new VectorStoreRetriever({ vectorStore, k: 10, filter: "X" });
+
   // Este retriever se encarga de buscar la información relevante en la vector store
   // teniendo en cuenta el historial de conversación.
   const historyAwareRetriever = await createHistoryAwareRetriever({
