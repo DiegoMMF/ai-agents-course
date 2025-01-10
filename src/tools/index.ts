@@ -8,6 +8,7 @@ import { pull } from "langchain/hub";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { Annotation } from "@langchain/langgraph";
 import { QuerySqlTool } from "langchain/tools/sql";
+import { StateGraph } from "@langchain/langgraph";
 
 // Chains are compositions of predictable steps. In LangGraph, we can represent a
 // chain via simple sequence of nodes. Let’s create a sequence of steps that:
@@ -102,6 +103,7 @@ const queryDatabase = async () => {
   });
   saveOutput("writeQueryResult", writeQueryResult, "./src/tools/output/");
 
+  // TODO: IMPORTANT NOTE BELOW.
   // This is the most dangerous part of creating a SQL chain. Consider carefully
   // if it is OK to run automated queries over your data. Minimize the database
   // connection permissions as much as possible. Consider adding a human approval
@@ -133,7 +135,7 @@ const queryDatabase = async () => {
     const response = await chatGroq.invoke(promptValue);
     return { answer: response.content };
   };
-  
+
   // Let´s test the chain with three different questions:
   const finalAnswerOne = await generateAnswer({
     question: "How many albums has Aerosmith?",
@@ -158,6 +160,32 @@ const queryDatabase = async () => {
     answer: "",
   });
   saveOutput("finalAnswerThree", finalAnswerThree, "./src/tools/output/");
+
+  // TODO: IMPORTANT NOTE BELOW.
+  // There are scenarios not supported by this arrangement. For example, this system
+  // will execute a SQL query for any user input– even “hello”. Importantly, as we’ll
+  // see below, some questions require more than one query to answer. We will address
+  // these scenarios in the Agents section.
+
+  const graphBuilder = new StateGraph({ stateSchema: StateAnnotation })
+    .addNode("writeQuery", writeQuery)
+    .addNode("executeQuery", executeQuery)
+    .addNode("generateAnswer", generateAnswer)
+    .addEdge("__start__", "writeQuery")
+    .addEdge("writeQuery", "executeQuery")
+    .addEdge("executeQuery", "generateAnswer")
+    .addEdge("generateAnswer", "__end__");
+
+  const graph = graphBuilder.compile();
+
+  let inputs = { question: "How many employees are there?" };
+
+  console.log(inputs);
+  console.log("\n====\n");
+  for await (const step of await graph.stream(inputs, { streamMode: "updates" })) {
+    console.log(step);
+    console.log("\n====\n");
+  }
 };
 
 queryDatabase();

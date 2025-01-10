@@ -120,10 +120,13 @@ En esencia, el proceso es el siguiente:
 
 #### SQL Tool
 
-El objetivo es [crear un tool para ejecutar consultas SQL](https://js.langchain.com/docs/tutorials/sql_qa/#dealing-with-high-cardinality-columns).
+El objetivo es [crear un tool para ejecutar consultas SQL](https://js.langchain.com/docs/tutorials/sql_qa/#dealing-with-high-cardinality-columns) en cuatro pasos.
 
-#### LangGraph
+1. Recibir la pregunta del usuario en lenguaje natural. [InputStateAnnotation]
+2. Transformar la pregunta en una consulta SQL. [writeQuery]
+3. Ejecutar la consulta SQL. [executeQuery]
+4. Transformar la respuesta SQL en una respuesta en lenguaje natural. [generateAnswer]
 
-El objetivo es [crear un graph para ejecutar consultas SQL](https://js.langchain.com/docs/tutorials/sql_qa/#dealing-with-high-cardinality-columns).
+#### Orchestrating with LangGraph
 
-We will pull a prompt from the [Prompt Hub](https://smith.langchain.com/hub) to instruct the model.
+Finally, we compile our application into a single *graph* object. In this case, we are just connecting the three steps into a single sequence.
