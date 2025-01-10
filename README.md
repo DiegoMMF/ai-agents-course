@@ -121,3 +121,9 @@ En esencia, el proceso es el siguiente:
 #### SQL Tool
 
 El objetivo es [crear un tool para ejecutar consultas SQL](https://js.langchain.com/docs/tutorials/sql_qa/#dealing-with-high-cardinality-columns).
+
+#### LangGraph
+
+El objetivo es [crear un graph para ejecutar consultas SQL](https://js.langchain.com/docs/tutorials/sql_qa/#dealing-with-high-cardinality-columns).
+
+We will pull a prompt from the [Prompt Hub](https://smith.langchain.com/hub) to instruct the model.
