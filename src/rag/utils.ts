@@ -8,12 +8,12 @@ let counter = 1;
 
 export const saveOutput = (
   path: string,
-  data: any,
+  data: string | object,
   rootPath: string = "./src/rag/output/"
 ) => {
   writeFileSync(
     `${rootPath}response_${counter}_${path}.json`,
-    JSON.stringify(data, null, 2)
+    typeof data === "object" ? JSON.stringify(data, null, 2) : data
   );
   counter++;
 };
