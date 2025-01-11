@@ -20,7 +20,6 @@ export const textSplitter = new RecursiveCharacterTextSplitter({
 });
 
 export const llm = new ChatGroq({
-  modelName: "llama3-8b-8192",
+  model: "mixtral-8x7b-32768",
   temperature: 0,
-  maxTokens: 1000,
 });
