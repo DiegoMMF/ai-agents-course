@@ -106,7 +106,36 @@ funcionalidad específica o un servicio externo. Cuando el modelo recibe una pre
 o una tarea que requiere interacción con un sistema externo, el Toolkit actúa como
 intermediario, permitiendo al agente ejecutar esa tarea de manera efectiva.
 
-En esencia, el proceso es el siguiente:
+### [Key concepts](https://js.langchain.com/docs/concepts/tool_calling/#key-concepts)
+
+1. **Tool Creation**: Use the tool function to create a tool. A tool is an association
+   between a function and its schema.
+
+2. **Tool Binding**: The tool needs to be connected to a model that supports tool
+   calling. This gives the model awareness of the tool and the associated input schema
+   required by the tool.
+
+3. **Tool Calling**: When appropriate, the model can decide to call a tool and ensure its
+   response conforms to the tool's input schema.
+
+4. **Tool Execution**: The tool can be executed using the args provided by the model.
+
+### Recommended usage
+
+This pseudo-code illustrates the recommended workflow for using tool calling. Created tools are passed to .bindTools() method as a list. This model can be called, as usual. If a tool call is made, model's response will contain the tool call arguments. The tool call arguments can be passed directly to the tool.
+
+```
+// Tool creation
+const tools = [myTool];
+
+// Tool binding
+const modelWithTools = model.bindTools(tools);
+
+// Tool calling
+const response = await modelWithTools.invoke(userInput);
+```
+
+#### En esencia, el proceso es el siguiente:
 
 - Input del Usuario: El usuario ingresa una pregunta o tarea que puede requerir
   acceso a una base de datos, una API externa o incluso la ejecución de código.
@@ -129,4 +158,5 @@ El objetivo es [crear un tool para ejecutar consultas SQL](https://js.langchain.
 
 #### Orchestrating with LangGraph
 
-Finally, we compile our application into a single *graph* object. In this case, we are just connecting the three steps into a single sequence.
+Finally, we compile our application into a single _graph_ object. In this case, we
+are just connecting the three steps into a single sequence.
