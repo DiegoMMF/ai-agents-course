@@ -7,7 +7,7 @@ import { AIMessageChunk, HumanMessage, ToolMessage } from "@langchain/core/messa
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { RunnableConfig, RunnableLambda } from "@langchain/core/runnables";
 import { chatGroq } from "../../utils/models";
-import { tvly } from "../tvly";
+import { tvly } from "./tvly";
 
 const main = async () => {
   // * We can invoke dirrectly with args:

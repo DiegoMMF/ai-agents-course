@@ -10,7 +10,7 @@ import {
   AgentAction,
 } from "langchain/agents";
 import { chatGroq as llm } from "../../utils/models";
-import { tvly } from "../tvly";
+import { tvly } from "../../tools/tavilySearch/tvly";
 
 const main = async () => {
   const prompt: ChatPromptTemplate = await pull<ChatPromptTemplate>(

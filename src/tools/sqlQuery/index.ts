@@ -2,7 +2,7 @@ import { z } from "zod";
 import { SqlDatabase } from "langchain/sql_db";
 import { DataSource } from "typeorm";
 import { saveOutput } from "../../rag/utils";
-import { createDatabase } from "../db";
+import { createDatabase } from "./db";
 import { chatGroq } from "../../utils/models";
 import { pull } from "langchain/hub";
 import { ChatPromptTemplate } from "@langchain/core/prompts";

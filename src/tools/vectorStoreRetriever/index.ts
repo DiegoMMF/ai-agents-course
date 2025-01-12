@@ -2,7 +2,7 @@ import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { fireworksEmbeddings } from "../../utils/embeddings";
 import { saveOutput } from "../../rag/utils";
 import { tool } from "@langchain/core/tools";
-import { tvly } from "../tvly";
+import { tvly } from "../tavilySearch/tvly";
 import { chatGroq } from "../../utils/models";
 import { VectorStoreRetriever } from "@langchain/core/vectorstores";
 import { thirdSplitter } from "../../utils/splitters";

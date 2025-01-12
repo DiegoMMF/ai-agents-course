@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from "fs";
 import path from "path";
 import sqlite3 from "sqlite3";
-import { saveOutput } from "../../rag/utils";
+import { saveOutput } from "../../../rag/utils";
 
 sqlite3.verbose();
 

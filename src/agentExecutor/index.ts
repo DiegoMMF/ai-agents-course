@@ -1,7 +1,7 @@
 import { saveOutput } from "../rag/utils";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { createToolCallingAgent } from "langchain/agents";
-import { tvly } from "../tools/tvly";
+import { tvly } from "../tools/tavilySearch/tvly";
 import { retrieverTool } from "./retriever";
 import { AgentExecutor } from "langchain/agents";
 import { ChatMessageHistory } from "@langchain/community/stores/message/in_memory";
