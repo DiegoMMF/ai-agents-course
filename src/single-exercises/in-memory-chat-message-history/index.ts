@@ -5,7 +5,7 @@ import { trimmer } from "../../utils/trimmers";
 import {
   dummyGetSessionHistoryV2 as getMessageHistory,
   store,
-} from "../../messages/inMemoryChatMessageHistory";
+} from "../../utils/messages";
 import { writeFileSync } from "fs";
 
 const runnable = trimmer.pipe(chatGroq);

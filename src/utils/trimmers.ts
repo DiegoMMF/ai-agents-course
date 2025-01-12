@@ -4,7 +4,7 @@ import {
   trimMessages,
 } from "@langchain/core/messages";
 import { chatGroq } from "./models";
-import { msgs } from "../messages/messages";
+import { msgs } from "./messages";
 import { Runnable } from "@langchain/core/runnables";
 
 /**

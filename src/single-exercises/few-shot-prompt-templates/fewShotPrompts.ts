@@ -5,7 +5,7 @@ import {
   HumanMessagePromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { examples } from "../../messages/messages";
+import { examples } from "../../utils/messages";
 
 /**
  * A template for creating chat prompts with predefined messages.
