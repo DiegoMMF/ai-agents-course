@@ -1,6 +1,6 @@
 // Import the Pinecone library
 import { RecordValues } from "@pinecone-database/pinecone";
-import { pc } from "../../db/embeddings";
+import { pc } from "../../utils/embeddings";
 import { writeFileSync } from "fs";
 
 const query = "Tell me about the tech company known as Apple.";

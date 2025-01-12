@@ -1,6 +1,6 @@
 // Import the Pinecone library
 import { PineconeRecord, RecordMetadata } from "@pinecone-database/pinecone";
-import { documentsC, pc } from "../../db/embeddings";
+import { documentsC, pc } from "../../utils/embeddings";
 import { writeFileSync } from "fs";
 
 // Convert the text into numerical vectors that Pinecone can index

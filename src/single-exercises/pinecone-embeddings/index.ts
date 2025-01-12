@@ -1,5 +1,5 @@
 import { writeFileSync } from "fs";
-import { documentsC, pc } from "../../db/embeddings";
+import { documentsC, pc } from "../../utils/embeddings";
 
 // Convert the text into numerical vectors that Pinecone can index
 const model = "multilingual-e5-large";

@@ -4,7 +4,7 @@ import {
   documentsA,
   documentsB,
   chromaVectorStore,
-} from "../../db/embeddings";
+} from "../../utils/embeddings";
 
 const hfPlainEmbeddings = async () => {
   // Embed documents into a vector space
