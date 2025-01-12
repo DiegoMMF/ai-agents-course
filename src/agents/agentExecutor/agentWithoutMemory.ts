@@ -1,7 +1,7 @@
-import { saveOutput } from "../rag/utils";
-import { chatGroq } from "../utils/models";
+import { saveOutput } from "../../rag/utils";
+import { chatGroq } from "../../utils/models";
 import { retrieverTool } from "./retriever";
-import { tvly } from "../tools/tavilySearch/tvly";
+import { tvly } from "../../tools/tavilySearch/tvly";
 
 tvly
   .invoke("what is the weather in SF")

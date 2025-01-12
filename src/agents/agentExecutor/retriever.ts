@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { tool } from "@langchain/core/tools";
-import { cheerioLoader } from "../utils/loaders";
-import { textSplitter } from "../utils/splitters";
-import { fireworksEmbeddings } from "../utils/embeddings";
+import { cheerioLoader } from "../../utils/loaders";
+import { textSplitter } from "../../utils/splitters";
+import { fireworksEmbeddings } from "../../utils/embeddings";
 // import { saveOutput } from "../rag/utils";
 
 const vectorStoreAsRetriever = async () => {
