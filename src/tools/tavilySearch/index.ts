@@ -1,46 +1,35 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
 import { saveOutput } from "../../rag/utils";
-import { StructuredTool, Tool, tool } from "@langchain/core/tools";
+import { StructuredTool, tool } from "@langchain/core/tools";
 import { AIMessageChunk, HumanMessage, ToolMessage } from "@langchain/core/messages";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { RunnableConfig, RunnableLambda } from "@langchain/core/runnables";
 import { chatGroq } from "../../utils/models";
-
-export const tavilySearchResultsInstance: TavilySearchResults =
-  new TavilySearchResults({
-    apiKey: process.env.TAVILY_API_KEY,
-    maxResults: 2,
-    verbose: true,
-  });
-console.log(
-  "typeof tavilySearchResultsInstance: ",
-  typeof tavilySearchResultsInstance
-);
+import { tvly } from "../tvly";
 
 const main = async () => {
   // * We can invoke dirrectly with args:
-  // const directSearchResult = await tavilySearchResultsInstance.invoke(
+  // const directSearchResult = await tvly.invoke(
   //   "Are there alternatives to Fireworks Embeddings?"
   // );
   // saveOutput("directSearchResult", directSearchResult, "./src/agents/output/");
 
   // * Through one argument:
-  // const inputArgumentResult = await tavilySearchResultsInstance.invoke({
+  // const inputArgumentResult = await tvly.invoke({
   //   input: "Are there alternatives to LangChain?",
   // });
   // saveOutput("inputArgumentResult", inputArgumentResult, "./src/agents/output/");
 
   // * Or we can invoke the tool with a model-generated ToolCall
   // const mockedModelGeneratedToolCall = {
-  //   name: tavilySearchResultsInstance.name,
+  //   name: tvly.name,
   //   args: { input: "Are there alternatives to Groq?" },
   //   id: "1",
   //   type: "tool_call",
   // };
-  // const toolCallResult = await tavilySearchResultsInstance.invoke(
+  // const toolCallResult = await tvly.invoke(
   //   mockedModelGeneratedToolCall
   // );
   // saveOutput("toolCallResult", toolCallResult, "./src/agents/output/");
@@ -53,7 +42,7 @@ const main = async () => {
     ["placeholder", "{messages}"],
   ]);
 
-  const modelWithTools = chatGroq.bindTools([tavilySearchResultsInstance]);
+  const modelWithTools = chatGroq.bindTools([tvly]);
   const chain = prompt.pipe(modelWithTools);
 
   const processUserInput = async (
@@ -65,7 +54,7 @@ const main = async () => {
       { messages: [humanMessage] },
       config
     );
-    const toolMsgs: ToolMessage[] = await tavilySearchResultsInstance.batch(
+    const toolMsgs: ToolMessage[] = await tvly.batch(
       aiMsg.tool_calls || [],
       config
     );
@@ -75,7 +64,7 @@ const main = async () => {
   const toolChain = RunnableLambda.from(processUserInput);
 
   // * We could also create a tool from the TavilySearchResults class
-  const tavilySearchTool: StructuredTool = tool(tavilySearchResultsInstance.invoke, {
+  const tavilySearchTool: StructuredTool = tool(tvly.invoke, {
     name: "tavily_search",
     description: "Search the web for information",
   });

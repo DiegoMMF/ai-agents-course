@@ -10,12 +10,7 @@ import {
   AgentAction,
 } from "langchain/agents";
 import { chatGroq as llm } from "../../utils/models";
-import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
-
-const tavilySearchTool = new TavilySearchResults({
-  apiKey: process.env.TAVILY_API_KEY,
-  maxResults: 2,
-});
+import { tvly } from "../tvly";
 
 const main = async () => {
   const prompt: ChatPromptTemplate = await pull<ChatPromptTemplate>(
@@ -26,11 +21,11 @@ const main = async () => {
   const agent: AgentRunnableSequence<
     { steps: AgentStep[] },
     AgentAction | AgentFinish
-  > = await createReactAgent({ llm, prompt, tools: [tavilySearchTool]});
+  > = await createReactAgent({ llm, prompt, tools: [tvly]});
 
   const executor = new AgentExecutor({
     agent,
-    tools: [tavilySearchTool],
+    tools: [tvly],
   });
 
   const result = await executor.invoke({

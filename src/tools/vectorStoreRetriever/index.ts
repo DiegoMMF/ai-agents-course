@@ -2,7 +2,7 @@ import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { fireworksEmbeddings } from "../../utils/embeddings";
 import { saveOutput } from "../../rag/utils";
 import { tool } from "@langchain/core/tools";
-import { tavilySearchResultsInstance } from "../tavilySearch";
+import { tvly } from "../tvly";
 import { chatGroq } from "../../utils/models";
 import { VectorStoreRetriever } from "@langchain/core/vectorstores";
 import { thirdSplitter } from "../../utils/splitters";
@@ -42,7 +42,7 @@ const main = async () => {
     description: text,
   });
 
-  const searchTool = tool(tavilySearchResultsInstance.invoke, {
+  const searchTool = tool(tvly.invoke, {
     name: "search",
     description: "Search the web for information",
   });
