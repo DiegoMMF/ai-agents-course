@@ -13,12 +13,6 @@ export const directoryLoader = new DirectoryLoader("./src/rag/pdfs", {
   ".pdf": (path) => new PDFLoader(path),
 });
 
-// Instanciamos y configuramos el splitter de documentos.
-export const textSplitter = new RecursiveCharacterTextSplitter({
-  chunkSize: 100,
-  chunkOverlap: 20,
-});
-
 // Instanciamos el modelo de embeddings de Hugging Face.
 export const hfEmbeddings = new HuggingFaceInferenceEmbeddings({
   apiKey: process.env.HUGGINGFACEHUB_API_KEY,

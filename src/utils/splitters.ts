@@ -14,6 +14,11 @@ export const secondSplitter = new RecursiveCharacterTextSplitter({
   separators: ["|", "##", ">", "-"],
 });
 
+export const thirdSplitter = new RecursiveCharacterTextSplitter({
+  chunkSize: 100,
+  chunkOverlap: 20,
+});
+
 export const jsSplitter = RecursiveCharacterTextSplitter.fromLanguage("js", {
   chunkSize: 60,
   chunkOverlap: 0,
@@ -22,4 +27,9 @@ export const jsSplitter = RecursiveCharacterTextSplitter.fromLanguage("js", {
 export const tokenSplitter = new TokenTextSplitter({
   chunkSize: 10,
   chunkOverlap: 0,
+});
+
+export const textSplitter = new RecursiveCharacterTextSplitter({
+  chunkSize: 1000,
+  chunkOverlap: 200,
 });

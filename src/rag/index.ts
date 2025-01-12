@@ -8,9 +8,9 @@ import {
   contextualizedQPrompt,
   directoryLoader,
   qaPrompt,
-  textSplitter,
   vectorStore,
 } from "./config";
+import { thirdSplitter } from "../utils/splitters";
 
 const main = async () => {
   // Carga los documentos fuente en un array de documentos.
@@ -18,7 +18,7 @@ const main = async () => {
   saveOutput("docs", docs);
 
   // Divide los documentos en chunks de texto para procesarlos más eficientemente.
-  const splittedDocs = await textSplitter.splitDocuments(docs);
+  const splittedDocs = await thirdSplitter.splitDocuments(docs);
   saveOutput("splittedDocs", splittedDocs);
 
   // Traemos la Vector Store a la que previamente le agregamos el LLM de embeddings y
