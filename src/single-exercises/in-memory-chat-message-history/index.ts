@@ -1,7 +1,7 @@
 import { chatGroq } from "../../utils/models";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import { trimmer } from "../../messages/trimOptions";
+import { trimmer } from "../../utils/trimmers";
 import {
   dummyGetSessionHistoryV2 as getMessageHistory,
   store,

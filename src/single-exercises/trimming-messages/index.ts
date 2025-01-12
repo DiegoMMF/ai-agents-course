@@ -1,7 +1,7 @@
 import { trimMessages } from "@langchain/core/messages";
 import { msgs } from "../../messages/messages";
 import { chatGroq } from "../../utils/models";
-import { getTrimmedMessages, trimmer, trimOptions } from "../../messages/trimOptions";
+import { getTrimmedMessages, trimmer, trimOptions } from "../../utils/trimmers";
 import { writeFileSync } from "fs";
 
 /**
