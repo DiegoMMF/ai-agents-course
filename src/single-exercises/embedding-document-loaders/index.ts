@@ -1,21 +1,14 @@
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { FaissStore } from "@langchain/community/vectorstores/faiss";
-import { fireworksEmbeddings } from "../../utils/embeddings";
-import { TextLoader } from "langchain/document_loaders/fs/text";
-import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
 import { writeFileSync } from "fs";
 import { langChainDocuments } from "./documents";
-
-const pdfLoader = new PDFLoader("assets/CambridgeStartersPreparation.pdf");
-const txtLoader = new TextLoader("assets/poem_forever_add_ever.txt");
-const csvLoader = new CSVLoader("assets/ideas_de_negocio.csv");
-
-// Create a vector store with the documents and embeddings
-const vectorStore = new FaissStore(fireworksEmbeddings, {});
+import { faissVectorStore } from "../../utils/vectorStores";
+import { pdfLoader, txtLoader } from "../../utils/loaders";
+import { csvLoader } from "../../utils/loaders";
 
 const main = async () => {
   // Add the documents to the vector store
-  await vectorStore.addDocuments(langChainDocuments, { ids: ["1", "2", "3", "4"] });
+  await faissVectorStore.addDocuments(langChainDocuments, {
+    ids: ["1", "2", "3", "4"],
+  });
 
   // Al cargar un CSV, se crea un array de objetos donde cada objeto es una fila del
   // CSV que es interpretada como un documento individual.
@@ -33,18 +26,18 @@ const main = async () => {
   });
 
   // Agregar los documentos procesados al vector store
-  await vectorStore.addDocuments(processedDocuments);
+  await faissVectorStore.addDocuments(processedDocuments);
 
   const myPdf = await pdfLoader.load();
 
-  await vectorStore.addDocuments(myPdf, { ids: ["1"] });
+  await faissVectorStore.addDocuments(myPdf, { ids: ["1"] });
 
   const myTxt = await txtLoader.load();
 
-  await vectorStore.addDocuments(myTxt, { ids: ["2"] });
+  await faissVectorStore.addDocuments(myTxt, { ids: ["2"] });
 
   // Search for the documents in the vector store
-  const response0 = await vectorStore.similaritySearch("biology", 2);
+  const response0 = await faissVectorStore.similaritySearch("biology", 2);
 
   // Save the vector store to a file
   writeFileSync(`${__dirname}/response0.json`, JSON.stringify(response0, null, 2));
@@ -52,13 +45,13 @@ const main = async () => {
   // Realizar una búsqueda de similitud
   const query = "¿Cuáles son las ideas de negocio más innovadoras?";
 
-  const response1 = await vectorStore.similaritySearch(query, 5);
+  const response1 = await faissVectorStore.similaritySearch(query, 5);
   writeFileSync(`${__dirname}/response1.json`, JSON.stringify(response1, null, 2));
 
-  const response2 = await vectorStore.similaritySearch("exam", 2);
+  const response2 = await faissVectorStore.similaritySearch("exam", 2);
   writeFileSync(`${__dirname}/response2.json`, JSON.stringify(response2, null, 2));
 
-  const response3 = await vectorStore.similaritySearch("forever add ever", 2);
+  const response3 = await faissVectorStore.similaritySearch("forever add ever", 2);
   writeFileSync(`${__dirname}/response3.json`, JSON.stringify(response3, null, 2));
 };
 

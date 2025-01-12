@@ -6,11 +6,11 @@ import { createRetrievalChain } from "langchain/chains/retrieval";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import {
   contextualizedQPrompt,
-  directoryLoader,
   qaPrompt,
   vectorStore,
 } from "./config";
 import { thirdSplitter } from "../utils/splitters";
+import { directoryLoader } from "../utils/loaders";
 
 const main = async () => {
   // Carga los documentos fuente en un array de documentos.

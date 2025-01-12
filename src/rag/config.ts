@@ -1,17 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
-
-// Carga de documentos PDF a partir de un directorio.
-export const directoryLoader = new DirectoryLoader("./src/rag/pdfs", {
-  ".pdf": (path) => new PDFLoader(path),
-});
 
 // Instanciamos el modelo de embeddings de Hugging Face.
 export const hfEmbeddings = new HuggingFaceInferenceEmbeddings({
