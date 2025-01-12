@@ -1,4 +1,4 @@
-import { chatGroq } from "../../models/models";
+import { chatGroq } from "../../utils/models";
 import { z } from "zod";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { StructuredOutputParser } from "@langchain/core/output_parsers";

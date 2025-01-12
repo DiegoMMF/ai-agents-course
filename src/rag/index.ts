@@ -1,5 +1,5 @@
 import { getMessageHistory, saveOutput } from "./utils";
-import { chatGroq as llm } from "../models/models";
+import { chatGroq as llm } from "../utils/models";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createRetrievalChain } from "langchain/chains/retrieval";

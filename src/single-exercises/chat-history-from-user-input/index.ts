@@ -1,4 +1,4 @@
-import { chatGoogleGenerativeAI } from "../../models/models";
+import { chatGoogleGenerativeAI } from "../../utils/models";
 import { BaseMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { writeFileSync } from "fs";
 import { getUserInput } from "./getUserInput";

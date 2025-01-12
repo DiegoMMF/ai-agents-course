@@ -1,5 +1,5 @@
 import { HumanMessage } from "@langchain/core/messages";
-import { chatGoogleGenerativeAI } from "../../models/models";
+import { chatGoogleGenerativeAI } from "../../utils/models";
 import { writeFileSync } from "fs";
 
 /**

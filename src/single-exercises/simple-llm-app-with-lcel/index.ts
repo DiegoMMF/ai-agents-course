@@ -1,7 +1,7 @@
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { chatGroq } from "../../models/models";
+import { chatGroq } from "../../utils/models";
 import { writeFileSync } from "fs";
 
 const parser = new StringOutputParser();

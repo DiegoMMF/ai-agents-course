@@ -1,4 +1,4 @@
-import { chatGroq } from "../../models/models";
+import { chatGroq } from "../../utils/models";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { trimmer } from "../../messages/trimOptions";

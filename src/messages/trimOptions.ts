@@ -3,7 +3,7 @@ import {
   BaseMessage,
   trimMessages,
 } from "@langchain/core/messages";
-import { chatGroq } from "../models/models";
+import { chatGroq } from "../utils/models";
 import { msgs } from "./messages";
 import { Runnable } from "@langchain/core/runnables";
 

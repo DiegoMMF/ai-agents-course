@@ -1,4 +1,4 @@
-import { chatGroq } from "../../models/models";
+import { chatGroq } from "../../utils/models";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate, PromptTemplate } from "@langchain/core/prompts";
 import { writeFileSync } from "fs";

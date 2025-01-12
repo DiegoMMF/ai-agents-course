@@ -1,4 +1,4 @@
-import { chatGroq } from "../../models/models";
+import { chatGroq } from "../../utils/models";
 import { PromptTemplate } from "@langchain/core/prompts";
 
 const query = "Dime un chiste en menos de 50 palabras";

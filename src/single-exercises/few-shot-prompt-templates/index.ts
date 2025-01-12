@@ -1,5 +1,5 @@
 import { writeFileSync } from "fs";
-import { chatGroq } from "../../models/models";
+import { chatGroq } from "../../utils/models";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { fewShotPrompt, mainPrompt } from "./fewShotPrompts";
 

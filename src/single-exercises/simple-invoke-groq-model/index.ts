@@ -1,5 +1,5 @@
 import { HumanMessage, SystemMessage, AIMessage } from "@langchain/core/messages";
-import { chatGroq } from "../../models/models";
+import { chatGroq } from "../../utils/models";
 import { writeFileSync } from "fs";
 
 const chatOne = async () => {
