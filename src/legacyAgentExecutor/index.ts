@@ -1,13 +1,13 @@
 import { saveOutput } from "../rag/utils";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { createToolCallingAgent } from "langchain/agents";
-import { llm } from "./config";
 import { tvly } from "./tvly";
 import { retrieverTool } from "./retriever";
 import { AgentExecutor } from "langchain/agents";
 import { ChatMessageHistory } from "@langchain/community/stores/message/in_memory";
 import { BaseChatMessageHistory } from "@langchain/core/chat_history";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
+import { chatGroq } from "../utils/models";
 
 const store: Record<string, BaseChatMessageHistory> = {};
 
@@ -23,7 +23,7 @@ const prompt = ChatPromptTemplate.fromMessages([
 
 const agent = async () => {
   const agent = createToolCallingAgent({
-    llm,
+    llm: chatGroq,
     tools: [tvly, retrieverTool],
     prompt,
   });
@@ -96,7 +96,11 @@ const agent = async () => {
       { role: "assistant", content: "Hello Bob! How can I assist you today?" },
     ],
   });
-  saveOutput("agentWithMemory", agentWithMemory, "./src/legacyAgentExecutor/output/");
+  saveOutput(
+    "agentWithMemory",
+    agentWithMemory,
+    "./src/legacyAgentExecutor/output/"
+  );
 };
 
 agent();

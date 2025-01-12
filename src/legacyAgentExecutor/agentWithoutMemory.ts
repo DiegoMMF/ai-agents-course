@@ -1,5 +1,5 @@
 import { saveOutput } from "../rag/utils";
-import { llm } from "./config";
+import { chatGroq } from "../utils/models";
 import { retrieverTool } from "./retriever";
 import { tvly } from "./tvly";
 
@@ -16,7 +16,7 @@ retrieverTool
   );
 
 // We could simply use the runnableModelWithTools to run an agent without memory
-const runnableModelWithTools = llm.bindTools([tvly, retrieverTool]);
+const runnableModelWithTools = chatGroq.bindTools([tvly, retrieverTool]);
 saveOutput(
   "runnableModelWithTools",
   runnableModelWithTools,
@@ -54,4 +54,3 @@ runnableModelWithTools
       "./src/legacyAgentExecutor/output/"
     )
   );
-
